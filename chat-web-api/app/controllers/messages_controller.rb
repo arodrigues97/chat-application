@@ -1,5 +1,7 @@
 class MessagesController < ApplicationController
 
+
+
     def index
 
         if (params.has_key?(:channel_id))
@@ -40,5 +42,7 @@ class MessagesController < ApplicationController
     def message_params
         params.permit(:message, :channel_id, :user_id)
     end
+
+ 
     
 end
