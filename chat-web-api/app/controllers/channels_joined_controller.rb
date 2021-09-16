@@ -1,0 +1,2 @@
+class ChannelsJoinedController < ApplicationController
+end

@@ -3,6 +3,7 @@ require 'database_cleaner'
 require 'spec_helper'
 require 'shoulda/matchers'
 
+
 # [...]
 # configure shoulda matchers to use rspec as the test framework and full matcher libraries for rails
 Shoulda::Matchers.configure do |config|
