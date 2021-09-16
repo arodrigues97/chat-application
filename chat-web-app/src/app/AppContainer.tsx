@@ -1,7 +1,8 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Container } from "semantic-ui-react"
 import { ChatRoom } from "../types/ChatRoom"
 import App from "../components/App"
+import { rooms } from "../data/roomData"
 
 /**
  * Acts as the Apps container, used for handling logic and state control of the app.
@@ -18,6 +19,19 @@ const AppContainer = () => {
    * Represents the chat room being viewed
    */
   const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>()
+
+  /**
+   * Handles the async logic to fetch chat room data
+   */
+  const fetchChatRooms = async () => {
+    //Temporarily load mock data
+    setChatRooms(rooms)
+  }
+
+  useEffect(() => {
+    
+    fetchChatRooms()
+  }, [])
 
   return <App
     rooms={chatRooms}
