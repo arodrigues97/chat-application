@@ -1,0 +1,47 @@
+
+
+Features to implement
+
+2. "As a consumer of the API, I can persist messages in specific channels I join."
+
+3. "As a consumer of the API, I can see the list of all the available channels"
+Get list of available channels (does this mean some are inactive?)
+
+
+//DB High level model
+
+user {
+    id: integer
+    name: string
+}
+
+channel {
+    id : integer
+    name : string
+    active : boolean
+    owner_user_id : integer -> User reference
+}
+
+message: {
+    id: integer
+    message: string
+    sender_user_id: integer -> User reference
+}
+
+channels_joined {
+    id: integer
+    user_id: integer -> User reference
+    channel_id: integer -> User reference
+}
+
+
+Feature 2.
+
+/channels/join => adds the user to a channel, therefore persisitng messages would be allowed
+
+/channels/message/ => persists a message on the channel
+
+Feature 2.
+
+/channels  => simple, return all channels (possible available) in db
+
