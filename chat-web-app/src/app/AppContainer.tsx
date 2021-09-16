@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react"
-import { Container } from "semantic-ui-react"
-import { ChatRoom } from "../types/ChatRoom"
 import App from "../components/App"
-import { rooms } from "../data/roomData"
+import { channelData } from "../data/channelData"
+import { ChatChannel } from "../types/ChatChannel"
+
+
+export type ChangeChannelFunction = (channel: ChatChannel) => void
 
 /**
  * Acts as the Apps container, used for handling logic and state control of the app.
@@ -11,21 +13,32 @@ import { rooms } from "../data/roomData"
 const AppContainer = () => {
 
   /**
-   * Represents the list of chat rooms loaded in the app
+   * Represents the list of chat channels to choose from
    */
-  const [chatRooms, setChatRooms] = useState<ChatRoom[]>([])
+  const [channels, setChatChannels] = useState<ChatChannel[]>([])
 
   /**
-   * Represents the chat room being viewed
+   * Represents the active chat room joined
    */
-  const [chatRoom, setChatRoom] = useState<ChatRoom | undefined>()
+  const [activeChannel, setActiveChannel] = useState<ChatChannel | undefined>()
 
   /**
-   * Handles the async logic to fetch chat room data
+   * Handles the async logic to fetch chat channel data
    */
   const fetchChatRooms = async () => {
     //Temporarily load mock data
-    setChatRooms(rooms)
+    setChatChannels(channelData)
+
+    //Set active channel to index 1
+    setActiveChannel(channels[0])
+  }
+
+  /**
+   * Changes the active channel
+   * @param channel The channel to set active
+   */
+  const handleChannelChange = (channel: ChatChannel) => {
+    setActiveChannel(channel)
   }
 
   useEffect(() => {
@@ -34,8 +47,9 @@ const AppContainer = () => {
   }, [])
 
   return <App
-    rooms={chatRooms}
-    room={chatRoom}
+    channels={channels}
+    activeChannel={activeChannel}
+    handleChannelChange={handleChannelChange}
   />
 }
 

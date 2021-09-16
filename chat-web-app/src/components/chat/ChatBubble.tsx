@@ -1,5 +1,4 @@
 import { ChatMessage } from "../../types/ChatMessage"
-import { User } from "../../types/user"
 
 export type ChatBubbleProps = {
   message: ChatMessage
