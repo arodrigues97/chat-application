@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react"
 import App from "../components/App"
-import { channelData } from "../data/channelData"
+import { channelData } from "../data/data"
 import { ChatChannel } from "../types/ChatChannel"
-
+import "./AppContainer.css"
 
 export type ChangeChannelFunction = (channel: ChatChannel) => void
 
@@ -28,9 +28,6 @@ const AppContainer = () => {
   const fetchChatRooms = async () => {
     //Temporarily load mock data
     setChatChannels(channelData)
-
-    //Set active channel to index 1
-    setActiveChannel(channels[0])
   }
 
   /**
@@ -46,11 +43,21 @@ const AppContainer = () => {
     fetchChatRooms()
   }, [])
 
-  return <App
+  useEffect(() => {
+
+    //If theres channels && no active channel is set, then set it to the first channel in the list
+    if (channels.length > 0 && !activeChannel) {
+      setActiveChannel(channels[0])
+    }
+  }, [channels])
+
+  return <div className="app">
+    <App
     channels={channels}
     activeChannel={activeChannel}
     handleChannelChange={handleChannelChange}
   />
+  </div>
 }
 
 export default AppContainer

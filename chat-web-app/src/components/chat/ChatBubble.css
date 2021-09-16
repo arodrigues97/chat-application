@@ -1,0 +1,8 @@
+.chatBubble .message {
+  padding: 1rem;
+}
+
+.chatBubble .timestamp {
+  font-weight: bold;
+  color: lightgray;
+}
