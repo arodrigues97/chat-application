@@ -1,0 +1,7 @@
+.channelMessageList {
+  list-style: none;
+}
+
+.channelMessageList > li {
+  margin-top: 1rem;
+}
