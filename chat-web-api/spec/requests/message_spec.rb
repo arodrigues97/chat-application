@@ -8,8 +8,8 @@ describe "Messages API", type: :request do
         FactoryBot.create(:user, id: 2, name: "Ankit Kanojia")
 
         #Create two channels
-        FactoryBot.create(:channel, id: 1, name: "Test Channel")
-        FactoryBot.create(:channel, id: 2, name: "Test Channel 2")
+        FactoryBot.create(:channel, id: 1, name: "Test Channel", user_id: 1)
+        FactoryBot.create(:channel, id: 2, name: "Test Channel 2", user_id: 2)
 
         #Join user  #1 to channel 2
         FactoryBot.create(:channel_joined, user_id: 1, channel_id: 2)
@@ -21,6 +21,7 @@ describe "Messages API", type: :request do
              "message": "Hello!"
          }
 
+         #Assert successfully response
         expect(response).to have_http_status(:success)
 
         #Let's make sure the newely added post is there

@@ -24,7 +24,7 @@ describe "Channels API", type: :request do
             expect(JSON.parse(response.body).size).to eq(1)
 
             #To be super sure let's make sure the active status in the responses are true!
-           expect(JSON.parse(response.body)[0]['active']).to eq(true])
+           expect(JSON.parse(response.body)[0]['active']).to eq(true)
             
             
         end
