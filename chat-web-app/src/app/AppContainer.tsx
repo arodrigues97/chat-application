@@ -1,11 +1,15 @@
+import axios from "axios"
 import { useEffect, useState } from "react"
+import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import App from "../components/App"
-import { channelData } from "../data/data"
 import { ChatChannel } from "../types/ChatChannel"
 import "./AppContainer.css"
-import axios from "axios"
-import { Dimmer, Loader, Segment, Image, Header, Icon } from "semantic-ui-react"
+import { USE_API } from "../config"
+import { channelData } from "../data/data"
 
+/**
+ * Describes the change channel function signature since it's passed between components
+ */
 export type ChangeChannelFunction = (channel: ChatChannel) => void
 
 /**
@@ -16,32 +20,41 @@ const AppContainer = () => {
   /**
    * Represents the list of chat channels to choose from
    */
-  const [channels, setChatChannels] = useState<ChatChannel[]>([])
+  const [channels, setChatChannels] = useState<ChatChannel[] | undefined>()
 
   /**
    * Represents the active chat room joined
    */
   const [activeChannel, setActiveChannel] = useState<ChatChannel | undefined>()
 
+  /**
+   * Represents if there is fetching happening
+   */
   const [fetching, setFetching] = useState(false)
 
   /**
    * Handles the async logic to fetch chat channel data
    */
   const fetchChatRooms = async () => {
-    console.log("Fetching!")
+    console.log("USe=", USE_API)
+    if (!USE_API) {
+      setChatChannels(channelData)
+      return
+    }
+
     setFetching(true)
 
     axios
       .get<ChatChannel[]>("http://localhost:3000/channels")
       .then((response) => {
-        console.log(response)
+        setChatChannels(response.data)
       })
       .catch((error) => {
-        console.log("Axios Error:", error)
+        console.log(error.message)
       })
-    //Temporarily load mock data
-    //setChatChannels(channelData)
+      .then(() => {
+        setFetching(false)
+      })
   }
 
   /**
@@ -57,9 +70,12 @@ const AppContainer = () => {
   }, [])
 
   useEffect(() => {
+    if (!channels) {
+      return
+    }
     //If theres channels && no active channel is set, then set it to the first channel in the list
     if (channels.length > 0 && !activeChannel) {
-      setActiveChannel(channels[0])
+      handleChannelChange(channels[0])
     }
   }, [channels])
 

@@ -20,14 +20,16 @@ export const channelData: ChatChannel[] = [
     messages: [
       {
         id: "1",
-        sender: userData[0],
-        timeStamp: new Date(),
+        channelId: "1",
+        user: userData[0],
+        timeStamp: "2021-07-22",
         message: "Hello, everyone. It's me Adam Rodrigues.",
       },
       {
         id: "2",
-        sender: userData[0],
-        timeStamp: new Date(),
+        channelId: "1",
+        user: userData[0],
+        timeStamp: "2021-07-22",
         message: "Hello, everyone. It's me Adam Rodrigues.",
       },
     ],
@@ -38,8 +40,9 @@ export const channelData: ChatChannel[] = [
     messages: [
       {
         id: "4",
-        sender: userData[1],
-        timeStamp: new Date(),
+        channelId: "1",
+        user: userData[1],
+        timeStamp: "2021-07-22",
         message: "Hello Adam!",
       },
     ],

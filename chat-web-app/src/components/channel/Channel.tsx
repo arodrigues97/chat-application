@@ -13,7 +13,7 @@ const Channel = (props: ChannelProps) => {
 
   return (
     <Segment>
-      <h3>{channel.name} - Channel History</h3>
+      <h3>{channel.name} - Channel</h3>
 
       <ChannelHistory channel={channel} />
 

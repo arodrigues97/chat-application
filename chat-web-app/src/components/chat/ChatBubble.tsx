@@ -7,18 +7,19 @@ export type ChatBubbleProps = {
 }
 
 const ChatBubble = (chatBubbleProps: ChatBubbleProps) => {
-  
-  const {message} = chatBubbleProps
+  const { message } = chatBubbleProps
 
-  return <div>
-   <Message>
-     <Message.Header>{message.sender.name}</Message.Header>
-     <Message.Content className={"chatBubble"}>
-        <div className="message">{message.message}</div>
-        <div className="timestamp">{message.timeStamp.toDateString()}</div>
-     </Message.Content>
-   </Message>
-  </div>
+  return (
+    <div>
+      <Message>
+        <Message.Header>{message.user.name}</Message.Header>
+        <Message.Content className={"chatBubble"}>
+          <div className="message">{message.message}</div>
+          <div className="timestamp">{message.timeStamp}</div>
+        </Message.Content>
+      </Message>
+    </div>
+  )
 }
 
 export default ChatBubble
