@@ -1,12 +1,18 @@
 
+# Prerequisites
+ - Ruby -> ruby 2.6.3p62
+ - Rails -> Rails 6.1.4.1
+ 
+
 # Installation Instructions
 
 1. Clone the repo locally on your machine
 2. Two folders will appear: "chat-web-application" & "chat-web-api"
 3. Open a terminal and navigate to the chat-web-api folder and run rails server
 4. Change into the chat-web-application directory
-5. If you don't want to connect to the API then you can turn this off by going to "src/config.ts" and setting USE_API=false.
-6. Execute the command in your terminal >. npm start
+5. Execute the command in your terminal > npm install
+6. If you don't want to connect to the API then you can turn this off by going to "src/config.ts" and setting USE_API=false.
+7. Execute the command in your terminal > npm start
 
 
 # Technologies Used
