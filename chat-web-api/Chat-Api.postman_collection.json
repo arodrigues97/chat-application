@@ -105,6 +105,25 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Active Channels",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/active_channels",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"active_channels"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
