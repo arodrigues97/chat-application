@@ -15,7 +15,7 @@ const ChannelHistory = (props: ChannelHistoryProps) => {
         <Segment placeholder>
           <Header icon>
             <Icon name="exclamation" />
-            No messa
+            No messages
           </Header>
         </Segment>
       )}
