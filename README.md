@@ -122,7 +122,7 @@ $ npm run test
     expected in a take home programming assignment. I opted out not to include in any user authorization as the time 
     restraint on this project indicated to me that it would not be fesible in a fully testing manner if chosen to implement.
 
-    Thank you for the oppurtunity and a chance to spend time on a new technology!
+    Thank you for the opportunity and a chance to spend time on a new technology!
 
     - Adam Rodrigues
 
