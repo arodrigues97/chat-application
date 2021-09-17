@@ -1,49 +1,125 @@
+<div align="center" id="top">
 
-# Prerequisites
- - Ruby -> ruby 2.6.3p62
- - Rails -> Rails 6.1.4.1
- 
+&#xa0;
 
-# Installation Instructions
+</div>
 
-1. Clone the repo locally on your machine
-2. Two folders will appear: "chat-web-app" & "chat-web-api"
-3. Open a terminal and navigate to the chat-web-api folder and run rails server > rails server
-4. Change into the chat-web-app directory
-5. Execute the command in your terminal > npm install
-6. If you don't want to connect to the API then you can turn this off by going to "src/config.ts" and setting USE_API=false.
-7. Execute the command in your terminal > npm start
+<h1 align="center">Chat Application</h1>
 
-# Running Tests
-- Backend run command > rspec
-- Front-end run command > npm run test
+<p align="center">
+  <img alt="Github top language" src="https://img.shields.io/github/languages/top/arodrigues97/chat-application?color=56BEB8">
 
+  <img alt="Github language count" src="https://img.shields.io/github/languages/count/arodrigues97/chat-application?color=56BEB8">
 
-# Technologies Used
+  <img alt="Repository size" src="https://img.shields.io/github/repo-size/arodrigues97/chat-application?color=56BEB8">
 
-Front End - React, TypeScript, Jest for testing
+</p>
 
-Back End - Rails
+<p align="center">
+  <a href="#dart-about">About</a> &#xa0; | &#xa0; 
+  <a href="#sparkles-features">Features</a> &#xa0; | &#xa0;
+  <a href="#rocket-technologies">Technologies</a> &#xa0; | &#xa0;
+  <a href="#white_check_mark-requirements">Requirements</a> &#xa0; | &#xa0;
+  <a href="#checkered_flag-starting">Starting</a> &#xa0; | &#xa0;
+  <a href="https://github.com/arodrigues97" target="_blank">Author</a>
+</p>
 
+<br>
 
-# Requirements (Full Stack)
-Front End:
+## :dart: About
 
-1. As a User of the web-app, I can see a list of all the channels 
-2. As a User of the web-app, I can joins channel and see the history of it
+Chat application is built with React, TypeScript, Semantic UI and Rails! It's goal is to implement a small set of features outlined in a project requirement.
 
-Back End:
+## :sparkles: Features
 
-1. As a consumer of API, I can persist my chat messages in specific channels I join
-2. As a consumer of the API, I can see a list of all the available channels
+:heavy_check_mark: Feature 1; "As a User of the web-app, I can see a list of all the channels"
+:heavy_check_mark: Feature 2; "As a User of the web-app, I can join a channel and see the history of it"
+:heavy_check_mark: Feature 3; "As a consumer of the API, I can see the list of all the available channels"
+:heavy_check_mark: Feature 4; "As a consumer of the API, I can persist messages in specific channels I join."
 
+## :rocket: Technologies
 
-# Why these features ?
+The following tools were used in this project:
 
-I decided to choose features that I could integrate between the front-end and back-end without going over my feature limit for this assingment.
+- [React](https://pt-br.reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Semantic UI](https://react.semantic-ui.com/)
+- [Jest](https://jestjs.io/)
+- [Axios](https://github.com/axios/axios)
+- [Rails](https://github.com/rails/rails)
+- [RSpec](https://github.com/rspec/rspec)
 
-# Next steps & assumptions
+## :white_check_mark: Requirements
 
-Given I had more time I would have definitely liked to see all the features implemented. 
+Before starting :checkered_flag:, you need to have [Git](https://git-scm.com), [Node](https://nodejs.org/en/), [Ruby](https://www.ruby-lang.org/en/downloads/) and [Rails](https://github.com/rails/rails) installed
 
-Assumptions made: I made the assumption that applying for the full-stack developer role that it would have made sense to connect my front-end to my api. 
+## :checkered_flag-starting: Starting
+
+```bash
+# Clone this project
+$ git clone https://github.com/arodrigues97/chat-application
+
+# Access
+$ cd chat-application
+```
+
+## :checkered_flag: Back-End
+
+```bash
+# Access Back-End
+$ cd chat-web-api
+
+# Install gems
+$ bundle install
+
+# Migrate database
+$ rails db:migrate
+
+# Seed database
+$ rails db:seed
+
+# Run the rails server
+$ rails server
+
+# Testing
+$ rspec
+
+# Install dependencies
+$ yarn
+
+# The server will initialize in the <http://localhost:3000>
+```
+
+## :checkered_flag: Front-End
+
+```bash
+# Access Front-End
+$ cd chat-web-app
+
+# Load dependencies
+$ npm install
+
+# Run server
+$ npm start
+
+# Test Components
+$ npm run test
+
+# The server will initialize on the <http://localhost:3001>
+```
+
+## :rocket: Assignment Related Information
+
+    Hello, If you're reading this then you're probably checking out the project! It was a great experience in learning rails. It's definitely an extremely opionionated framework to say the least. An interesting takeaway for me from this project was the speed at which you can get a super functioning API up and running!
+
+    The features I choose to implement into the project were features that were dependent upon one another so I could show them working in a Full Stack cohesively. All the features were super interesting however I choose to stuck to the baiscs for this :)
+
+    If I had more time I would have definitely been interested in implementing the AI chatbot.
+
+    When making assumptions I did my best to use my understanding of the industry but also what is expected in a take home programming assignment. I opted out not to include in any user authorization as the time restraint on this project indicated to me that it would not be fesible in a fully testing manner if chosen to implement.
+
+    Thank you for the oppurtunity and a chance to spend time on a new technology!
+
+    - Adam Rodrigues
+
+<a href="#top">Back to top</a>
