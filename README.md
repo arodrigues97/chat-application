@@ -1,46 +1,38 @@
 
-#Installation Instructions
+# Installation Instructions
 
 1. Clone the repo locally on your machine
-2. Two folders will appear: 1. chat-web-application chat-web-api
-3. Cd into the chat-web-api folder and run rails server
-4. Cd into the chat-web-application
-5. You can opt to connect to the API by making a change to the constant USE_API in src/config.ts. The default is set to true!
-6. Run npm start
+2. Two folders will appear: "chat-web-application" & "chat-web-api"
+3. Open a terminal and navigate to the chat-web-api folder and run rails server
+4. Change into the chat-web-application directory
+5. If you don't want to connect to the API then you can turn this off by going to "src/config.ts" and setting USE_API=false.
+6. Execute the command in your terminal >. npm start
 
 
-#Technologies Used
+# Technologies Used
 
 Front End - React, TypeScript, Jest for testing
 
 Back End - Rails
 
 
-#Requirements for Full Stack
-
-Candidates must meet BOTH of the criteria for Front-end and Back-end sections,
-therefore I have chosen two features from the two sections
-
-
-
+# Requirements (Full Stack)
 Front End:
 
-1. I can see a list of all the channels 
-2. I can joins channel and see the history of it
+1. As a User of the web-app, I can see a list of all the channels 
+2. As a User of the web-app, I can joins channel and see the history of it
 
 Back End:
 
-1. As a consumer of API, I can persist my chat messages in specific channels I join.
+1. As a consumer of API, I can persist my chat messages in specific channels I join
 2. As a consumer of the API, I can see a list of all the available channels
 
 
-#Why these features?
+# Why these features ?
 
-I choose these features because they were inherent with one another which allowed me to connect my work between the two stacks. 
+I decided to choose features that I could integrate between the front-end and back-end without going over my feature limit for this assingment.
 
-Working with rails for the first time had me in deep water just for a little bit, I found my footing quickly and I'm excited to write more code in rails!
-
-#Next steps & assumpions
+# Next steps & assumptions
 
 Given I had more time I would have definitely liked to see all the features implemented. 
 
