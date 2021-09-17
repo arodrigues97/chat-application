@@ -105,6 +105,11 @@ $ npm run test
 # The server will initialize on the <http://localhost:3001>
 ```
 
+## Mock Data or Connec to API
+
+If you want to just use the mock data, in the front-end go to src/config.ts and set
+USE_API = false
+
 ## :school: Assignment Related Information
 
     Hello, If you're reading this then you're probably checking out the project! It was a great 
