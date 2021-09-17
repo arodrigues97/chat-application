@@ -1,8 +1,8 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import AppContainer from "./app/AppContainer"
+import AppContainer from "./containers/AppContainer"
 import reportWebVitals from "./reportWebVitals"
-import 'semantic-ui-css/semantic.min.css'
+import "semantic-ui-css/semantic.min.css"
 
 ReactDOM.render(
   <React.StrictMode>

@@ -1,5 +1,5 @@
 import { Menu } from "semantic-ui-react"
-import { ChangeChannelFunction } from "../../app/AppContainer"
+import { ChangeChannelFunction } from "../../containers/AppContainer"
 import { ChatChannel } from "../../types/ChatChannel"
 
 export type ChatRoomMenuPros = {

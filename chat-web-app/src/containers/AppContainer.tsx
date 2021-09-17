@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import App from "../components/App"
 import { ChatChannel } from "../types/ChatChannel"
-import "./AppContainer.css"
 import { USE_API } from "../config"
 import { channelData } from "../data/data"
 
@@ -94,13 +93,11 @@ const AppContainer = () => {
   }
 
   return (
-    <div className="app">
-      <App
-        channels={channels}
-        activeChannel={activeChannel}
-        handleChannelChange={handleChannelChange}
-      />
-    </div>
+    <App
+      channels={channels}
+      activeChannel={activeChannel}
+      handleChannelChange={handleChannelChange}
+    />
   )
 }
 
