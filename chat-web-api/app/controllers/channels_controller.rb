@@ -2,7 +2,7 @@ class ChannelsController < ApplicationController
 
     
     def index 
-        @channels = Channel.all
+        @channels = Channel.where(:active => true)
         json_response(@channels)
     end
 
@@ -17,7 +17,7 @@ class ChannelsController < ApplicationController
     end
 
     def channel_params
-        params.permit(:user_id, :name)
+        params.permit(:user_id, :name, :active)
     end
 
 
