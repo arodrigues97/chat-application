@@ -5,5 +5,5 @@ export type ChatMessage = {
   channelId: string
   message: string
   user: User
-  timeStamp: String
+  timeStamp: string
 }

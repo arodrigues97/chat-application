@@ -2,7 +2,7 @@ import { Form, Segment, Button, Checkbox } from "semantic-ui-react"
 import { ChatChannel } from "../../types/ChatChannel"
 import "./Channel.css"
 import ChannelHistory from "./ChannelHistory"
-import ChatBox from "./ChatBox"
+import ChatBox from "../chat/ChatBox"
 
 export type ChannelProps = {
   channel: ChatChannel

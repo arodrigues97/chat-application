@@ -13,7 +13,7 @@ import ChannelsMenu from "./channel/ChannelsMenu"
 
 export type AppProps = {
   channels: ChatChannel[] | undefined
-  activeChannel: ChatChannel | undefined
+  activeChannel?: ChatChannel | undefined
   handleChannelChange: ChangeChannelFunction
 }
 
