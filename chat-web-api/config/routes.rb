@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   resources :channels_joineds
   resources :messages
 
+  get 'active_channels', :to => 'channels#active_channels'
+
 
 end

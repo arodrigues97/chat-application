@@ -2,7 +2,7 @@ class ChannelsController < ApplicationController
 
     
     def index 
-        @channels = Channel.where(:active => true)
+        @channels = Channel.all
         json_response(@channels)
     end
 
@@ -14,6 +14,11 @@ class ChannelsController < ApplicationController
     def create
         @channel = Channel.create!(channel_params)
         json_response(@channel)
+    end
+
+    def active_channels
+        @channels = Channel.where(:active => true)
+        json_response(@channels)
     end
 
     def channel_params
