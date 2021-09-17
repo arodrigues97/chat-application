@@ -12,7 +12,7 @@ export const userData: User[] = [
   },
   {
     id: "2",
-    name: "Anit Kanojia",
+    name: "Ankit Kanojia",
   },
 ]
 
