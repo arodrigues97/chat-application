@@ -10,8 +10,8 @@
  User.create!(id: 1, name: "Adam Rodrigues")
  User.create!(id: 2, name: "Ankit Kanojia")
 
-Channel.create!(id: 1, name: "Adam's Channel", user_id: 1)
-Channel.create!(id: 2, name: "Ankit's Channel", user_id: 2)
+Channel.create!(id: 1, name: "Adam's Channel", user_id: 1, active: true)
+Channel.create!(id: 2, name: "Ankit's Channel", user_id: 2, active: false)
 
 
 ChannelJoined.create!(user_id: 1, channel_id: 1)
