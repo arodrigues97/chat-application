@@ -35,7 +35,6 @@ const AppContainer = () => {
    * Handles the async logic to fetch chat channel data
    */
   const fetchChatRooms = async () => {
-    console.log("USe=", USE_API)
     if (!USE_API) {
       setChatChannels(channelData)
       return
