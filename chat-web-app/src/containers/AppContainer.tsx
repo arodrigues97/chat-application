@@ -32,7 +32,8 @@ const AppContainer = () => {
   const [fetching, setFetching] = useState(false)
 
   /**
-   * Handles the async logic to fetch chat channel data
+   * Handles the async logic to fetch chat channel data or if the USE_API constant
+   * is set to false the app will work with mock data
    */
   const fetchChatRooms = async () => {
     if (!USE_API) {
