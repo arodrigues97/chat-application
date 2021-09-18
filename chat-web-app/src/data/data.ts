@@ -7,30 +7,30 @@ import { User } from "../types/User"
 
 export const userData: User[] = [
   {
-    id: "1",
+    id: 1,
     name: "Adam Rodrigues",
   },
   {
-    id: "2",
+    id: 2,
     name: "Ankit Kanojia",
   },
 ]
 
 export const channelData: ChatChannel[] = [
   {
-    id: "1",
+    id: 1,
     name: "Homestars",
     messages: [
       {
-        id: "1",
-        channelId: "1",
+        id: 1,
+        channelId: 1,
         user: userData[0],
         timeStamp: "2021-07-22 11:20 am",
         message: "Hello, everyone. It's me Adam Rodrigues.",
       },
       {
-        id: "2",
-        channelId: "1",
+        id: 2,
+        channelId: 1,
         user: userData[0],
         timeStamp: "2021-07-22 11:21 am",
         message: "Hello, everyone. It's me Adam Rodrigues.",
@@ -38,12 +38,12 @@ export const channelData: ChatChannel[] = [
     ],
   },
   {
-    id: "2",
+    id: 2,
     name: "Adam Rodrigues",
     messages: [
       {
-        id: "3",
-        channelId: "1",
+        id: 3,
+        channelId: 1,
         user: userData[1],
         timeStamp: "2021-07-22 11:24 am",
         message: "Hello Adam!",
@@ -51,12 +51,12 @@ export const channelData: ChatChannel[] = [
     ],
   },
   {
-    id: "3",
+    id: 3,
     name: "Joey Tribiani",
     messages: [
       {
-        id: "4",
-        channelId: "1",
+        id: 4,
+        channelId: 1,
         user: userData[1],
         timeStamp: "2021-07-22 11:43 am",
         message: "Hello Adam!",

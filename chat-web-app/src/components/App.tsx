@@ -6,20 +6,26 @@ import {
   Icon,
   Segment,
 } from "semantic-ui-react"
-import { ChangeChannelFunction } from "../containers/AppContainer"
+import {
+  ChangeChannelFunction,
+  PersistMessageFunction,
+} from "../containers/AppContainer"
 import { ChatChannel } from "../types/ChatChannel"
 import Channel from "./channel/Channel"
 import ChannelsMenu from "./channel/ChannelsMenu"
 import "./App.css"
+import ChannelContainer from "../containers/ChannelContainer"
 
 export type AppProps = {
   channels: ChatChannel[] | undefined
   activeChannel?: ChatChannel | undefined
   handleChannelChange: ChangeChannelFunction
+  handlePersistMessage: PersistMessageFunction
 }
 
 const App = (props: AppProps) => {
-  const { channels, activeChannel, handleChannelChange } = props
+  const { channels, activeChannel, handleChannelChange, handlePersistMessage } =
+    props
   return (
     <div className="app">
       <Container>
@@ -42,7 +48,12 @@ const App = (props: AppProps) => {
               />
             </Grid.Column>
             <Grid.Column stretched width={12}>
-              {activeChannel && <Channel channel={activeChannel} />}
+              {activeChannel && (
+                <ChannelContainer
+                  activeChannel={activeChannel}
+                  handlePersistMessage={handlePersistMessage}
+                />
+              )}
             </Grid.Column>
           </Grid>
         )}

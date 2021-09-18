@@ -10,7 +10,7 @@ const ChannelHistory = (props: ChannelHistoryProps) => {
   const { channel } = props
   const { messages } = channel
   return (
-    <div>
+    <div className="chatHistory">
       {messages && messages.length === 0 && (
         <Segment placeholder>
           <Header icon>

@@ -7,12 +7,20 @@ import { USE_API } from "../config"
 import { channelData } from "../data/data"
 
 /**
- * Describes the change channel function signature since it's passed between components
+ * The structure of the method for changing a channel
  */
 export type ChangeChannelFunction = (channel: ChatChannel) => void
 
 /**
- * Acts as the Apps container, used for handling logic and state control of the app.
+ * The structure of the method for persisting a message
+ */
+export type PersistMessageFunction = (
+  message: string | undefined,
+  channel: ChatChannel
+) => void
+
+/**
+ * Handles the logic and state for the App
  * @returns @link App
  */
 const AppContainer = () => {
@@ -64,6 +72,35 @@ const AppContainer = () => {
     setActiveChannel(channel)
   }
 
+  const handlePersistMessage: PersistMessageFunction = (
+    message: string | undefined,
+    channel: ChatChannel
+  ) => {
+    if (!message) {
+      return
+    }
+    if (!channels) {
+      return
+    }
+    const clone = [...channels]
+    const channelClone = clone.find((c) => c.id === channel.id)
+    if (!channelClone) {
+      return
+    }
+    channelClone.messages.push({
+      id: channelClone.messages.length + 1,
+      message: message,
+      user: {
+        id: 1,
+        name: "Adam Rodrigues",
+      },
+      channelId: 1,
+      timeStamp: "2021-12-1 11:10PM",
+    })
+    setChatChannels(clone)
+    console.log("Handled persist message: ", message, ", channel:", channel)
+  }
+
   useEffect(() => {
     fetchChatRooms()
   }, [])
@@ -97,6 +134,7 @@ const AppContainer = () => {
       channels={channels}
       activeChannel={activeChannel}
       handleChannelChange={handleChannelChange}
+      handlePersistMessage={handlePersistMessage}
     />
   )
 }

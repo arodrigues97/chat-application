@@ -1,7 +1,14 @@
-.channelMessageList {
+.chatHistory {
+  height: 100%;
+}
+
+.chatHistory > .channelMessageList {
+  height: 100%;
+  overflow: auto;
   list-style: none;
 }
 
-.channelMessageList > li {
+.chatHistory > .channelMessageList > li {
   margin-top: 1rem;
+  padding: 1rem;
 }
