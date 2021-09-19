@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+ 
+  post '/users/search', :to => 'users#search'
 
-  get '/channels/search/:name', :to => 'channels#search_by_name'
+  post '/channels/search', :to => 'channels#search_by_name'
   get '/channels/active/', :to => 'channels#active_channels'
   
   resources :channels do 

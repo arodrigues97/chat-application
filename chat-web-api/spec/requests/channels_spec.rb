@@ -57,7 +57,6 @@ describe 'Channels API', type: :request do
         it 'assert statistics' do
             expect(@json['users']).to eq(1)
             expect(@json['messages']).to eq(1)
-            expect(@json['owner']).to eq(@user.name)
         end
 
     end
@@ -143,14 +142,14 @@ describe 'Channels API', type: :request do
         end 
     end
 
-    describe 'GET /channels/search' do
-
-        channel_name = "Channel!"
+    describe 'POST /channels/search' do
 
         before {
             user = FactoryBot.create(:user_random)
-            channel = FactoryBot.create(:channel_random, user_id: user.id, active: true, name: channel_name)
-            get "/channels/search/Channel!"
+            @channel = FactoryBot.create(:channel_random, user_id: user.id, active: true)
+            post '/channels/search',  :params =>  {
+                "name": @channel.name
+            }
             @json = JSON.parse(response.body)
         }
 
@@ -159,7 +158,7 @@ describe 'Channels API', type: :request do
         end
 
         it 'should return channel on search' do
-            expect(@json.first['name']).to eq(channel_name)
+            expect(@json.first['name']).to eq(@channel.name)
        end
 
     end

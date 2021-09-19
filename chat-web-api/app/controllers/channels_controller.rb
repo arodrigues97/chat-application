@@ -40,11 +40,9 @@ class ChannelsController < ApplicationController
         channel = Channel.find_by!(id: params[:id])
         joinedChannels = ChannelJoined.where(channel_id: params[:id])
         messages = Message.where(channel_id: params[:id])
-        owner = User.find_by!(id: channel.user_id)
         json_response({
             users: joinedChannels.length,
             messages: messages.length,
-            owner: owner.name
         })
     end
 
