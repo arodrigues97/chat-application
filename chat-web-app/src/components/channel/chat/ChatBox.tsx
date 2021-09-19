@@ -1,11 +1,11 @@
-import { Button, Form, Search } from "semantic-ui-react"
+import { Button, Form } from "semantic-ui-react"
 import {
   ChatMessageChangeFunction,
   PersistMessageFunction,
 } from "../../../containers/AppContainer"
 import { ChatChannel } from "../../../types/ChatChannel"
-import ChatSearch, { ChatSearchProps } from "./ChatSearch"
 import "./ChatBox.css"
+import { ChatSearchProps } from "./ChatSearch"
 
 export type ChatBoxProps = {
   chatMessage: string | undefined

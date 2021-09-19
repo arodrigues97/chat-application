@@ -16,10 +16,13 @@ export const userData: User[] = [
   },
 ]
 
+export const mockUser = userData[0]
+
 export const channelData: ChatChannel[] = [
   {
     id: 1,
     name: "Homestars",
+    users: [userData[0], userData[1]],
     messages: [
       {
         id: 1,
@@ -34,32 +37,6 @@ export const channelData: ChatChannel[] = [
         user: userData[0],
         timeStamp: "2021-07-22 11:21 am",
         message: "Hello, everyone. It's me Adam Rodrigues.",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Adam Rodrigues",
-    messages: [
-      {
-        id: 3,
-        channelId: 2,
-        user: userData[1],
-        timeStamp: "2021-07-22 11:24 am",
-        message: "Hello Adam!",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Joey Tribiani",
-    messages: [
-      {
-        id: 4,
-        channelId: 3,
-        user: userData[1],
-        timeStamp: "2021-07-22 11:43 am",
-        message: "Hello",
       },
     ],
   },

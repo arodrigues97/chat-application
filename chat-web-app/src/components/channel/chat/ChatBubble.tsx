@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react"
-import { Button, Form, Icon, Message, Modal } from "semantic-ui-react"
+import { Form, Icon, Message } from "semantic-ui-react"
 import { ChatMessage } from "../../../types/ChatMessage"
 import { User } from "../../../types/User"
 import "./ChatBubble.css"

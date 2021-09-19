@@ -1,5 +1,4 @@
 import { ChangeEvent, useEffect, useState } from "react"
-import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import App from "../components/App"
 import { ChatChannel } from "../types/ChatChannel"
 import { ChatMessage } from "../types/ChatMessage"
@@ -11,7 +10,7 @@ import {
   sendDeleteMessage,
   sendEditMessage,
   sendPersistMessage,
-} from "../utils/AxiosHelper"
+} from "../types/utils/AxiosHelper"
 
 /**
  * The structure of the method for changing a channel
@@ -61,7 +60,7 @@ const AppContainer = () => {
   /**
    * Represents the logged in user
    */
-  const [user, setUser] = useState({
+  const [user] = useState({
     id: 1,
     name: "Adam Rodrigues",
   })
@@ -69,17 +68,17 @@ const AppContainer = () => {
   /**
    * Represents the text value of the chat message in the chat box
    */
-  const [chatMessage, setChatMessage] = useState<string | undefined>()
+  const [chatMessage, setChatMessage] = useState<string>("")
 
   /**
    * Represents the text value of the chat message being edited
    */
-  const [editMessage, setEditMessage] = useState<string | undefined>()
+  const [editMessage, setEditMessage] = useState<string>("")
 
   /**
    * Represents the text value in the search for previous message input
    */
-  const [searchText, setSearchText] = useState<string | undefined>()
+  const [searchText, setSearchText] = useState<string>("")
 
   /**
    * Represents the search results returned from the search text
@@ -104,26 +103,6 @@ const AppContainer = () => {
 
   const sendError = (error: string) => {
     setError(error)
-  }
-
-  /**
-   * Handles the async logic to fetch chat channel data or if the USE_API constant
-   * is set to false the app will work with mock data
-   */
-  const fetchChatRooms = async () => {
-    setFetching(true)
-    const response = await getChannels()
-    setFetching(false)
-    if (response.error) {
-      sendError(response.error)
-      return
-    }
-    if (!response.data) {
-      sendError("No channel data.")
-      return
-    }
-    setFetching(false)
-    setChatChannels(response.data)
   }
 
   /**
@@ -246,7 +225,7 @@ const AppContainer = () => {
     let messageResponse = response.data
 
     channel.messages = channel.messages.filter(
-      (m) => m.id != messageResponse.id
+      (m) => m.id !== messageResponse.id
     )
 
     setChatChannels(clone)
@@ -264,11 +243,11 @@ const AppContainer = () => {
     console.log("Toggling edit for message: ", message)
     const clone = [...channels]
 
-    if (editMessage != undefined) {
+    if (editMessage !== undefined) {
       clone.forEach((c) =>
         //Loop through channels and messages to see if a previous message
         //was toggled on
-        c.messages.find((m) => {
+        c.messages.forEach((m) => {
           if (m.editing && m.id !== message.id) {
             m.editing = false
           }
@@ -368,17 +347,13 @@ const AppContainer = () => {
    * @param value The value of the input
    * @param channel The channel to seach in
    */
-  const handleSearchChange = (
-    value: string | undefined,
-    channel: ChatChannel
-  ) => {
+  const handleSearchChange = (value: string, channel: ChatChannel) => {
     setSearchText(value)
-    if (!value) {
-      return
-    }
     setSearchResults(
-      channel.messages.filter((m) =>
-        m.message.toLocaleLowerCase().includes(value.toLowerCase())
+      channel.messages.filter(
+        (m) =>
+          m.user.id === user.id &&
+          m.message.toLocaleLowerCase().includes(value.toLowerCase())
       )
     )
   }
@@ -425,7 +400,26 @@ const AppContainer = () => {
   }
 
   useEffect(() => {
-    fetchChatRooms()
+    /**
+     * Handles the async logic to fetch chat channel data or if the USE_API constant
+     * is set to false the app will work with mock data
+     */
+    const fetchChannels = async () => {
+      setFetching(true)
+      const response = await getChannels()
+      setFetching(false)
+      if (response.error) {
+        sendError(response.error)
+        return
+      }
+      if (!response.data) {
+        sendError("No channel data.")
+        return
+      }
+      setFetching(false)
+      setChatChannels(response.data)
+    }
+    fetchChannels()
   }, [])
 
   return (

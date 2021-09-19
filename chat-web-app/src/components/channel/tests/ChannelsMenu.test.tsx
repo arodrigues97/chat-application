@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { channelData } from "../../../data/data"
+import { channelData, mockUser } from "../../../data/data"
+import { ChatChannel } from "../../../types/ChatChannel"
 import ChannelsMenu from "../ChannelsMenu"
 
 describe("ChannelsMenuTest", () => {
@@ -9,6 +10,10 @@ describe("ChannelsMenuTest", () => {
         channels={channelData}
         activeChannel={channelData[0]}
         handleChannelChange={() => {}}
+        handleJoinChannel={function (channel: ChatChannel): void {
+          throw new Error("Function not implemented.")
+        }}
+        user={mockUser}
       />
     )
   })
@@ -20,6 +25,4 @@ describe("ChannelsMenuTest", () => {
       expect(getByText(name)).toBeDefined()
     })
   })
-
-  test("handles menu click", async () => {})
 })

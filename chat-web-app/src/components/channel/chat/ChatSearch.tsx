@@ -1,16 +1,12 @@
-import { ChangeEvent } from "react"
-import { Search, SearchResult } from "semantic-ui-react"
+import { Search } from "semantic-ui-react"
 import { ChatChannel } from "../../../types/ChatChannel"
 import { ChatMessage } from "../../../types/ChatMessage"
 
 export type ChatSearchProps = {
   channel: ChatChannel | undefined
-  searchText: string | undefined
+  searchText: string
   searchResults: ChatMessage[] | undefined
-  handleSearchChange: (
-    value: string | undefined,
-    channel: ChatChannel
-  ) => void | undefined
+  handleSearchChange: (value: string, channel: ChatChannel) => void | undefined
 }
 
 const ChatSearch = (props: ChatSearchProps) => {
@@ -21,7 +17,9 @@ const ChatSearch = (props: ChatSearchProps) => {
   return (
     <Search
       aligned="right"
-      onSearchChange={(_, data) => handleSearchChange(data.value, channel)}
+      onSearchChange={(_, data) =>
+        handleSearchChange(data.value ? data.value : "", channel)
+      }
       results={
         searchResults
           ? searchResults.map((message) => ({

@@ -1,25 +1,25 @@
-import { Button, Loader, Popup, Segment } from "semantic-ui-react"
+import { ChangeEvent } from "react"
+import { Button, Popup, Segment } from "semantic-ui-react"
 import {
   ChatMessageChangeFunction,
   PersistMessageFunction,
 } from "../../containers/AppContainer"
 import { ChatChannel } from "../../types/ChatChannel"
-import ChatBox from "./chat/ChatBox"
+import { ChatMessage } from "../../types/ChatMessage"
+import { User } from "../../types/User"
 import "./Channel.css"
 import ChannelHistory from "./ChannelHistory"
-import { ChangeEvent } from "react"
-import { ChatMessage } from "../../types/ChatMessage"
+import ChatBox from "./chat/ChatBox"
 import ChatSearch, { ChatSearchProps } from "./chat/ChatSearch"
-import { User } from "../../types/User"
 
 export type ChannelProps = {
   channel: ChatChannel | undefined
   user: User
   fetching: boolean
-  chatMessage: string | undefined
+  chatMessage: string
   handleChatMessageChange: ChatMessageChangeFunction
   handlePersistMessage: PersistMessageFunction
-  editMessage: string | undefined
+  editMessage: string
   handleToggleEditMessage: (message: ChatMessage) => void
   handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleEditMessageSave: (message: ChatMessage) => void
@@ -33,7 +33,6 @@ const Channel = (props: ChannelProps) => {
   const {
     channel,
     user,
-    fetching,
     chatMessage,
     handleChatMessageChange,
     handlePersistMessage,
