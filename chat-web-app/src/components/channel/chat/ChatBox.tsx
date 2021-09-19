@@ -1,7 +1,9 @@
 import { Button, Form } from "semantic-ui-react"
-import { PersistMessageFunction } from "../../containers/AppContainer"
-import { ChatMessageChangeFunction } from "../../containers/ChannelContainer"
-import { ChatChannel } from "../../types/ChatChannel"
+import {
+  ChatMessageChangeFunction,
+  PersistMessageFunction,
+} from "../../../containers/AppContainer"
+import { ChatChannel } from "../../../types/ChatChannel"
 
 export type ChatBoxProps = {
   chatMessage: string | undefined
@@ -29,7 +31,7 @@ const ChatBox = (props: ChatBoxProps) => {
       </Form.Field>
       <Button
         type="submit"
-        primary
+        positive
         onClick={() => handlePersistMessage(chatMessage, channel)}
       >
         Submit

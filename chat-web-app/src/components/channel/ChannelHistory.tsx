@@ -1,13 +1,27 @@
+import { ChangeEvent } from "react"
 import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import { ChatChannel } from "../../types/ChatChannel"
-import ChatBubble from "../chat/ChatBubble"
+import { ChatMessage } from "../../types/ChatMessage"
+import ChatBubble from "./chat/ChatBubble"
 
 export type ChannelHistoryProps = {
   channel: ChatChannel
+  editMessage: string | undefined
+  handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
+  handleEditMessageSave: (message: ChatMessage) => void
+  handleToggleEditMessage: (message: ChatMessage) => void
+  handleDeleteMessage: (message: ChatMessage) => void
 }
 
 const ChannelHistory = (props: ChannelHistoryProps) => {
-  const { channel } = props
+  const {
+    channel,
+    editMessage,
+    handleToggleEditMessage,
+    handleEditMessageChange,
+    handleEditMessageSave,
+    handleDeleteMessage,
+  } = props
   const { messages } = channel
   return (
     <div className="chatHistory">
@@ -24,7 +38,14 @@ const ChannelHistory = (props: ChannelHistoryProps) => {
           messages.length > 0 &&
           messages.map((message) => (
             <li key={message.id}>
-              <ChatBubble message={message} />
+              <ChatBubble
+                message={message}
+                editMessage={editMessage}
+                handleToggleEditMessage={handleToggleEditMessage}
+                handleEditMessageChange={handleEditMessageChange}
+                handleEditMessageSave={handleEditMessageSave}
+                handleDeleteMessage={handleDeleteMessage}
+              />
             </li>
           ))}
       </ul>

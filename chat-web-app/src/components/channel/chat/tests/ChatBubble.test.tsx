@@ -1,6 +1,6 @@
 import { render, screen } from "@testing-library/react"
-import { channelData } from "../../../data/data"
-import Channel from "../../channel/Channel"
+import { channelData } from "../../../../data/data"
+import Channel from "../../Channel"
 import ChatBubble from "../ChatBubble"
 
 describe("Chat Bubble", () => {

@@ -43,7 +43,7 @@ export const channelData: ChatChannel[] = [
     messages: [
       {
         id: 3,
-        channelId: 1,
+        channelId: 2,
         user: userData[1],
         timeStamp: "2021-07-22 11:24 am",
         message: "Hello Adam!",
@@ -56,10 +56,10 @@ export const channelData: ChatChannel[] = [
     messages: [
       {
         id: 4,
-        channelId: 1,
+        channelId: 3,
         user: userData[1],
         timeStamp: "2021-07-22 11:43 am",
-        message: "Hello Adam!",
+        message: "Hello",
       },
     ],
   },
