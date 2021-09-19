@@ -1,10 +1,14 @@
+import { ChangeEvent } from "react"
 import {
   Button,
   Container,
+  Form,
   Grid,
   Header,
   Icon,
+  Loader,
   Message,
+  Modal,
   Segment,
 } from "semantic-ui-react"
 import { ChangeChannelFunction } from "../containers/AppContainer"
@@ -16,22 +20,30 @@ import ChannelsMenu from "./channel/ChannelsMenu"
 
 export type AppProps = {
   user: User
+  fetching: boolean
   channels: ChatChannel[] | undefined
   channelProps: ChannelProps
   activeChannel: ChatChannel | undefined
   error: string | undefined
+  channelName: string | undefined
+  handleChannelNameChange: (event: ChangeEvent<HTMLInputElement>) => void
   setError: (error: string | undefined) => void
   handleChannelChange: ChangeChannelFunction
   handleJoinChannel: (channel: ChatChannel) => void
+  handleCreateChannel: () => void
 }
 
 const App = (props: AppProps) => {
   const {
     user,
+    fetching,
     channels,
     channelProps,
     activeChannel,
     error,
+    channelName,
+    handleChannelNameChange,
+    handleCreateChannel,
     setError,
     handleChannelChange,
     handleJoinChannel,
@@ -49,6 +61,19 @@ const App = (props: AppProps) => {
     hasUserJoinedChannel,
     chatSearch,
   } = channelProps
+  if (!activeChannel && fetching) {
+    return (
+      <div className="loading">
+        <Segment placeholder>
+          <Header icon>
+            <Icon name="question" />
+            Loading..
+          </Header>
+          <Loader active inline="centered" />
+        </Segment>
+      </div>
+    )
+  }
   return (
     <div className="app">
       <Container>
@@ -59,15 +84,6 @@ const App = (props: AppProps) => {
               <p>{error}</p>
             </Message.Content>
           </Message>
-        )}
-        {(!channels || channels.length === 0) && (
-          <Segment placeholder>
-            <Header icon>
-              <Icon name="question" />
-              There are no channels available.
-            </Header>
-            {channels && <Button primary content="Create Channel" />}
-          </Segment>
         )}
         {channels && channels.length > 0 && (
           <Grid>
@@ -88,11 +104,48 @@ const App = (props: AppProps) => {
                       <Icon name="question" />
                       Create your own channel
                     </Header>
-                    {channels && <Button primary content="Create Channel" />}
+                    {channels && (
+                      <Modal
+                        trigger={
+                          <Button
+                            icon
+                            name="plus"
+                            primary
+                            content="Create Channel"
+                          />
+                        }
+                        header="Create a Channel"
+                        content={
+                          <Modal.Content>
+                            <Form>
+                              <Form.Field>
+                                <Form.Input
+                                  value={channelName}
+                                  onChange={handleChannelNameChange}
+                                  type="text"
+                                  placeholder="Enter the channel name"
+                                />
+                              </Form.Field>
+                            </Form>
+                          </Modal.Content>
+                        }
+                        actions={[
+                          "Cancel",
+                          {
+                            key: "yes",
+                            content: "Create",
+                            positive: true,
+                            onClick: () => handleCreateChannel(),
+                          },
+                        ]}
+                      />
+                    )}
                   </Segment>
                 )}
                 {activeChannel && (
                   <Channel
+                    user={user}
+                    fetching={fetching}
                     channel={activeChannel}
                     chatMessage={chatMessage}
                     handleChatMessageChange={handleChatMessageChange}

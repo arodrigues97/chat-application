@@ -21,7 +21,6 @@ const ChatBox = (props: ChatBoxProps) => {
     channel,
     handleChatMessageChange,
     handlePersistMessage,
-    chatSearch,
   } = props
 
   return (

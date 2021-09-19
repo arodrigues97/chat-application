@@ -1,4 +1,4 @@
-import { Button, Segment } from "semantic-ui-react"
+import { Button, Loader, Popup, Segment } from "semantic-ui-react"
 import {
   ChatMessageChangeFunction,
   PersistMessageFunction,
@@ -10,9 +10,12 @@ import ChannelHistory from "./ChannelHistory"
 import { ChangeEvent } from "react"
 import { ChatMessage } from "../../types/ChatMessage"
 import ChatSearch, { ChatSearchProps } from "./chat/ChatSearch"
+import { User } from "../../types/User"
 
 export type ChannelProps = {
   channel: ChatChannel | undefined
+  user: User
+  fetching: boolean
   chatMessage: string | undefined
   handleChatMessageChange: ChatMessageChangeFunction
   handlePersistMessage: PersistMessageFunction
@@ -29,6 +32,8 @@ export type ChannelProps = {
 const Channel = (props: ChannelProps) => {
   const {
     channel,
+    user,
+    fetching,
     chatMessage,
     handleChatMessageChange,
     handlePersistMessage,
@@ -51,6 +56,7 @@ const Channel = (props: ChannelProps) => {
         <h3>{channel.name} - Channel</h3>
 
         <ChannelHistory
+          user={user}
           channel={channel}
           editMessage={editMessage}
           handleToggleEditMessage={handleToggleEditMessage}
@@ -73,6 +79,15 @@ const Channel = (props: ChannelProps) => {
           primary
           content="Leave"
           onClick={() => handleLeaveChannel(channel)}
+        />
+        <Popup
+          trigger={<Button icon="info" />}
+          content={
+            " Number of Users: " +
+            channel.users?.length +
+            " Number of Messages: " +
+            channel.messages.length
+          }
         />
         <div className="chatSearch">
           <ChatSearch {...chatSearch} />

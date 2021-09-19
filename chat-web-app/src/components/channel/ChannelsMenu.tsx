@@ -19,7 +19,6 @@ const ChannelsMenu = (props: ChatRoomMenuPros) => {
     handleJoinChannel,
     user,
   } = props
-  //TODO: determine if joined
 
   return (
     <Menu fluid vertical tabular>

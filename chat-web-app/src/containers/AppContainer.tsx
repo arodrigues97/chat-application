@@ -4,9 +4,13 @@ import App from "../components/App"
 import { ChatChannel } from "../types/ChatChannel"
 import { ChatMessage } from "../types/ChatMessage"
 import {
+  createChannel,
   getChannels,
   getUserJoinedChannel,
   joinChannel,
+  sendDeleteMessage,
+  sendEditMessage,
+  sendPersistMessage,
 } from "../utils/AxiosHelper"
 
 /**
@@ -82,6 +86,13 @@ const AppContainer = () => {
    */
   const [searchResults, setSearchResults] = useState<
     ChatMessage[] | undefined
+  >()
+
+  /**
+   * Represents the name of the channel being created
+   */
+  const [createChannelName, setCreateChannelName] = useState<
+    string | undefined
   >()
 
   /**
@@ -165,7 +176,7 @@ const AppContainer = () => {
    * @param message The message to persist
    * @param channel The channel to persist the message to
    */
-  const handlePersistMessage: PersistMessageFunction = (
+  const handlePersistMessage: PersistMessageFunction = async (
     message: string | undefined,
     channel: ChatChannel
   ) => {
@@ -180,13 +191,20 @@ const AppContainer = () => {
     if (!channelClone) {
       return
     }
-    channelClone.messages.push({
-      id: channelClone.messages.length + 1,
-      message: message,
-      user: user,
-      channelId: channel.id,
-      timeStamp: "2021-12-1 11:10PM",
-    })
+
+    setFetching(true)
+    const response = await sendPersistMessage(channel, message, user)
+    setFetching(false)
+    if (response.error) {
+      setError(response.error)
+      return
+    }
+    if (!response.data) {
+      setError("No message data retrieved!")
+      return
+    }
+
+    channelClone.messages.push(response.data)
     setChatChannels(clone)
     setChatMessage("")
     updateSearchResults()
@@ -197,7 +215,7 @@ const AppContainer = () => {
    * The event handler for deleting a message
    * @param message The message being deleted
    */
-  const handleDeleteMessage = (message: ChatMessage) => {
+  const handleDeleteMessage = async (message: ChatMessage) => {
     if (!channels) {
       return
     }
@@ -211,7 +229,26 @@ const AppContainer = () => {
       return
     }
 
-    channel.messages = channel.messages.filter((m) => m.id != message.id)
+    const response = await sendDeleteMessage(message)
+
+    if (response.error) {
+      sendError(response.error)
+      return
+    }
+
+    if (!response.data) {
+      sendError("No message response received")
+      return
+    }
+
+    console.log("Response=", response)
+
+    let messageResponse = response.data
+
+    channel.messages = channel.messages.filter(
+      (m) => m.id != messageResponse.id
+    )
+
     setChatChannels(clone)
     updateSearchResults()
   }
@@ -267,7 +304,7 @@ const AppContainer = () => {
    * The event handler for the saving of an edited message
    * @param message The message to edit
    */
-  const handleEditMessageSave = (message: ChatMessage) => {
+  const handleEditMessageSave = async (message: ChatMessage) => {
     if (!channels || !editMessage) {
       return
     }
@@ -279,15 +316,34 @@ const AppContainer = () => {
     if (!channel) {
       return
     }
-    let cloneMessage = channel.messages.find((m) => m.id === message.id)
+
+    const response = await sendEditMessage(message, editMessage)
+
+    if (response.error) {
+      sendError(response.error)
+      return
+    }
+
+    if (!response.data) {
+      sendError("The response is missing the message data.")
+      return
+    }
+
+    let responseMessage = response.data
+
+    let cloneMessage = channel.messages.find((m) => m.id === responseMessage.id)
     if (!cloneMessage) {
       return
     }
 
+    //Set the message to being edited
+    cloneMessage.edited = responseMessage.edited
+    //Set the messages last edited date time string
+    cloneMessage.lastEdited = responseMessage.lastEdited
     //Set the message to the not editing state
     cloneMessage.editing = false
     //Set the message content to the newely typed message
-    cloneMessage.message = editMessage
+    cloneMessage.message = responseMessage.message
     //Clear the saved state of the editing message
     setEditMessage("")
     //Set the state with the new channel state
@@ -345,34 +401,49 @@ const AppContainer = () => {
     }
   }
 
+  const handleChannelNameChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setCreateChannelName(event.target.value)
+
+  const handleCreateChannel = async () => {
+    if (!createChannelName) {
+      sendError("You need to enter a channel name.")
+      return
+    }
+    const response = await createChannel(createChannelName, user)
+    if (response.error) {
+      sendError(response.error)
+      return
+    }
+    if (!response.data) {
+      sendError("The channel data is missing from the response.")
+      return
+    }
+    const clone = channels ? [...channels] : []
+    clone.push(response.data)
+    setChatChannels(clone)
+    setCreateChannelName(undefined)
+  }
+
   useEffect(() => {
     fetchChatRooms()
   }, [])
 
-  if (fetching) {
-    return (
-      <div className="loading">
-        <Segment placeholder>
-          <Header icon>
-            <Icon name="question" />
-            Loading..
-          </Header>
-          <Loader active inline="centered" />
-        </Segment>
-      </div>
-    )
-  }
-
   return (
     <App
       user={user}
+      fetching={fetching}
       channels={channels}
       activeChannel={activeChannel}
       error={error}
       setError={setError}
       handleChannelChange={handleChannelChange}
       handleJoinChannel={handleJoinChannel}
+      channelName={createChannelName}
+      handleChannelNameChange={handleChannelNameChange}
+      handleCreateChannel={handleCreateChannel}
       channelProps={{
+        user: user,
+        fetching: fetching,
         channel: activeChannel,
         chatMessage: chatMessage,
         handleChatMessageChange: handleChatMessageChange,

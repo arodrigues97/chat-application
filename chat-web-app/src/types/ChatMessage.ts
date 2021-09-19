@@ -6,6 +6,7 @@ export type ChatMessage = {
   message: string
   user: User
   timeStamp: string
+  lastEdited?: string
   editing?: boolean
-  lastEdit?: string
+  edited?: string
 }

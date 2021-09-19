@@ -4,12 +4,7 @@ import AppContainer from "./containers/AppContainer"
 import reportWebVitals from "./reportWebVitals"
 import "semantic-ui-css/semantic.min.css"
 
-ReactDOM.render(
-  <React.StrictMode>
-    <AppContainer />
-  </React.StrictMode>,
-  document.getElementById("root")
-)
+ReactDOM.render(<AppContainer />, document.getElementById("root"))
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
