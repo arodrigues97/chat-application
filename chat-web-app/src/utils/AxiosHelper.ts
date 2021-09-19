@@ -1,8 +1,8 @@
 import axios from "axios"
-import { GiphySuggestion } from "../GiphySuggestion"
-import { User } from "../User"
-import { ChatChannel } from "../ChatChannel"
-import { ChatMessage } from "../ChatMessage"
+import { GiphySuggestion } from "../types/GiphySuggestion"
+import { User } from "../types/User"
+import { ChatChannel } from "../types/ChatChannel"
+import { ChatMessage } from "../types/ChatMessage"
 
 const url = "http://localhost:3000"
 

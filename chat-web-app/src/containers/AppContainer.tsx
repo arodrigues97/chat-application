@@ -10,7 +10,7 @@ import {
   sendDeleteMessage,
   sendEditMessage,
   sendPersistMessage,
-} from "../types/utils/AxiosHelper"
+} from "../utils/AxiosHelper"
 
 /**
  * The structure of the method for changing a channel
@@ -40,7 +40,7 @@ const AppContainer = () => {
   /**
    * Represents the list of chat channels to choose from
    */
-  const [channels, setChatChannels] = useState<ChatChannel[] | undefined>()
+  const [channels, setChatChannels] = useState<ChatChannel[]>([])
 
   /**
    * Represents the active chat room joined
@@ -90,9 +90,7 @@ const AppContainer = () => {
   /**
    * Represents the name of the channel being created
    */
-  const [createChannelName, setCreateChannelName] = useState<
-    string | undefined
-  >()
+  const [createChannelName, setCreateChannelName] = useState<string>("")
 
   /**
    * Handles the change event of message typed in the @link ChatBox
@@ -113,10 +111,12 @@ const AppContainer = () => {
     setFetching(true)
     const response = await joinChannel(channel, user)
     setFetching(false)
+
     if (response.error) {
       sendError(response.error)
       return
     }
+
     if (!response.data) {
       sendError("Missing data!")
       return
@@ -125,19 +125,20 @@ const AppContainer = () => {
   }
 
   const hasUserJoinedChannel = async (channel: ChatChannel) => {
-    console.log("Checking if user has joined channel: ", joinChannel)
     setFetching(true)
     const response = await getUserJoinedChannel(channel, user)
     setFetching(false)
+
     if (response.error) {
       sendError(response.error)
       return false
     }
+
     if (!response.data) {
       sendError("Missing data!")
       return false
     }
-    console.log("Joined channel -", response)
+
     return true
   }
 
@@ -165,6 +166,7 @@ const AppContainer = () => {
     if (!channels) {
       return
     }
+
     const clone = [...channels]
     const channelClone = clone.find((c) => c.id === channel.id)
     if (!channelClone) {
@@ -174,10 +176,12 @@ const AppContainer = () => {
     setFetching(true)
     const response = await sendPersistMessage(channel, message, user)
     setFetching(false)
+
     if (response.error) {
       setError(response.error)
       return
     }
+
     if (!response.data) {
       setError("No message data retrieved!")
       return
@@ -187,7 +191,6 @@ const AppContainer = () => {
     setChatChannels(clone)
     setChatMessage("")
     updateSearchResults()
-    console.log("Handled persist message: ", message, ", channel:", channel)
   }
 
   /**
@@ -199,12 +202,10 @@ const AppContainer = () => {
       return
     }
 
-    console.log("Deleting message: ", message)
-
     const clone = [...channels]
     const channel = clone.find((c) => c.id === message.channelId)
     if (!channel) {
-      console.log("No channel found!")
+      sendError("No channel found!")
       return
     }
 
@@ -219,8 +220,6 @@ const AppContainer = () => {
       sendError("No message response received")
       return
     }
-
-    console.log("Response=", response)
 
     let messageResponse = response.data
 
@@ -240,7 +239,7 @@ const AppContainer = () => {
     if (!channels) {
       return
     }
-    console.log("Toggling edit for message: ", message)
+
     const clone = [...channels]
 
     if (editMessage !== undefined) {
@@ -266,6 +265,7 @@ const AppContainer = () => {
       console.log("No message found!")
       return
     }
+
     //Toggle the edit mode for the message
     cloneMessage.editing = !cloneMessage.editing
 
@@ -276,6 +276,10 @@ const AppContainer = () => {
     setChatChannels(clone)
   }
 
+  /**
+   * The event handler for when the editing message is changed
+   * @param event The event
+   */
   const handleEditMessageChange = (event: ChangeEvent<HTMLInputElement>) =>
     setEditMessage(event.target.value)
 
@@ -287,8 +291,6 @@ const AppContainer = () => {
     if (!channels || !editMessage) {
       return
     }
-
-    console.log("Saving message: ", message)
 
     const clone = [...channels]
     const channel = clone.find((c) => c.id === message.channelId)
@@ -338,7 +340,6 @@ const AppContainer = () => {
       return
     }
     setActiveChannel(undefined)
-    //TODO: more logic
   }
 
   /**
@@ -396,14 +397,10 @@ const AppContainer = () => {
     const clone = channels ? [...channels] : []
     clone.push(response.data)
     setChatChannels(clone)
-    setCreateChannelName(undefined)
+    setCreateChannelName("")
   }
 
   useEffect(() => {
-    /**
-     * Handles the async logic to fetch chat channel data or if the USE_API constant
-     * is set to false the app will work with mock data
-     */
     const fetchChannels = async () => {
       setFetching(true)
       const response = await getChannels()
@@ -432,21 +429,30 @@ const AppContainer = () => {
       setError={setError}
       handleChannelChange={handleChannelChange}
       handleJoinChannel={handleJoinChannel}
-      channelName={createChannelName}
-      handleChannelNameChange={handleChannelNameChange}
-      handleCreateChannel={handleCreateChannel}
+      createChannelProps={{
+        channelName: createChannelName,
+        handleChannelNameChange: handleChannelNameChange,
+        handleCreateChannel: handleCreateChannel,
+      }}
       channelProps={{
         user: user,
         fetching: fetching,
         channel: activeChannel,
-        chatMessage: chatMessage,
-        handleChatMessageChange: handleChatMessageChange,
-        handlePersistMessage: handlePersistMessage,
-        editMessage: editMessage,
-        handleToggleEditMessage: handleToggleEditMessage,
-        handleEditMessageChange: handleEditMessageChange,
-        handleEditMessageSave: handleEditMessageSave,
-        handleDeleteMessage: handleDeleteMessage,
+        chatBoxProps: {
+          channel: activeChannel,
+          chatMessage: chatMessage,
+          handleChatMessageChange: handleChatMessageChange,
+          handlePersistMessage: handlePersistMessage,
+        },
+        channelHistory: {
+          channel: activeChannel,
+          user,
+          editMessage,
+          handleToggleEditMessage,
+          handleEditMessageChange,
+          handleEditMessageSave,
+          handleDeleteMessage,
+        },
         handleLeaveChannel: handleLeaveChannel,
         hasUserJoinedChannel: hasUserJoinedChannel,
         chatSearch: {

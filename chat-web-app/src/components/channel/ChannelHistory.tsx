@@ -6,7 +6,7 @@ import { User } from "../../types/User"
 import ChatBubble from "./chat/ChatBubble"
 
 export type ChannelHistoryProps = {
-  channel: ChatChannel
+  channel: ChatChannel | undefined
   user: User
   editMessage: string
   handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
@@ -25,6 +25,9 @@ const ChannelHistory = (props: ChannelHistoryProps) => {
     handleEditMessageSave,
     handleDeleteMessage,
   } = props
+  if (!channel) {
+    return <div>Missing channel!</div>
+  }
   const { messages } = channel
   return (
     <div className="chatHistory">

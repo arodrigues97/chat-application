@@ -56,6 +56,7 @@ const ChatBubble = (chatBubbleProps: ChatBubbleProps) => {
       </Message.Content>
       {message.user.id === user.id && (
         <Icon
+          id="edit-icon"
           link
           name="edit"
           onClick={() => handleToggleEditMessage(message)}

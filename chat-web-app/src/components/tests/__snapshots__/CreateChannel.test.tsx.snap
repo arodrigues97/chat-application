@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CreateChannel should render initial layout 1`] = `
+<CreateChannel
+  channelName=""
+  handleChannelNameChange={[Function]}
+  handleCreateChannel={[Function]}
+/>
+`;

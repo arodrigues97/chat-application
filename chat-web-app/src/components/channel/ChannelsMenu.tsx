@@ -23,6 +23,7 @@ const ChannelsMenu = (props: ChatRoomMenuPros) => {
   const getMenuItem = (channel: ChatChannel, joined: boolean) => {
     return (
       <Menu.Item
+        id={"menu-" + channel.id}
         key={channel.id}
         active={activeChannel && activeChannel === channel}
         onClick={joined ? () => handleChannelChange(channel) : undefined}

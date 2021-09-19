@@ -5,14 +5,12 @@ import {
 } from "../../../containers/AppContainer"
 import { ChatChannel } from "../../../types/ChatChannel"
 import "./ChatBox.css"
-import { ChatSearchProps } from "./ChatSearch"
 
 export type ChatBoxProps = {
   chatMessage: string | undefined
-  channel: ChatChannel
+  channel: ChatChannel | undefined
   handleChatMessageChange: ChatMessageChangeFunction
   handlePersistMessage: PersistMessageFunction
-  chatSearch: ChatSearchProps
 }
 
 const ChatBox = (props: ChatBoxProps) => {
@@ -22,6 +20,10 @@ const ChatBox = (props: ChatBoxProps) => {
     handleChatMessageChange,
     handlePersistMessage,
   } = props
+
+  if (!channel) {
+    return <div>Invalid props! No channel provided.</div>
+  }
 
   return (
     <Form className="chatBox" onSubmit={() => handlePersistMessage}>

@@ -1,49 +1,39 @@
-import { ChangeEvent } from "react"
 import { Button, Popup, Segment } from "semantic-ui-react"
-import {
-  ChatMessageChangeFunction,
-  PersistMessageFunction,
-} from "../../containers/AppContainer"
 import { ChatChannel } from "../../types/ChatChannel"
-import { ChatMessage } from "../../types/ChatMessage"
 import { User } from "../../types/User"
 import "./Channel.css"
-import ChannelHistory from "./ChannelHistory"
-import ChatBox from "./chat/ChatBox"
+import ChannelHistory, { ChannelHistoryProps } from "./ChannelHistory"
+import ChatBox, { ChatBoxProps } from "./chat/ChatBox"
 import ChatSearch, { ChatSearchProps } from "./chat/ChatSearch"
 
 export type ChannelProps = {
   channel: ChatChannel | undefined
   user: User
   fetching: boolean
-  chatMessage: string
-  handleChatMessageChange: ChatMessageChangeFunction
-  handlePersistMessage: PersistMessageFunction
-  editMessage: string
-  handleToggleEditMessage: (message: ChatMessage) => void
-  handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
-  handleEditMessageSave: (message: ChatMessage) => void
-  handleDeleteMessage: (message: ChatMessage) => void
+  chatBoxProps: ChatBoxProps
   handleLeaveChannel: (channel: ChatChannel) => void
   hasUserJoinedChannel: (channel: ChatChannel) => Promise<boolean>
   chatSearch: ChatSearchProps
+  channelHistory: ChannelHistoryProps
 }
 
 const Channel = (props: ChannelProps) => {
   const {
     channel,
     user,
-    chatMessage,
-    handleChatMessageChange,
-    handlePersistMessage,
+    handleLeaveChannel,
+    channelHistory,
+    chatSearch,
+    chatBoxProps,
+  } = props
+
+  const {
     editMessage,
     handleToggleEditMessage,
     handleEditMessageChange,
     handleEditMessageSave,
     handleDeleteMessage,
-    handleLeaveChannel,
-    chatSearch,
-  } = props
+  } = channelHistory
 
   if (!channel) {
     return <div>Invalid props!</div>
@@ -64,13 +54,7 @@ const Channel = (props: ChannelProps) => {
           handleDeleteMessage={handleDeleteMessage}
         />
 
-        <ChatBox
-          channel={channel}
-          chatMessage={chatMessage}
-          handleChatMessageChange={handleChatMessageChange}
-          handlePersistMessage={handlePersistMessage}
-          chatSearch={chatSearch}
-        />
+        <ChatBox {...chatBoxProps} />
       </Segment>
 
       <div className="channelFunctions">
