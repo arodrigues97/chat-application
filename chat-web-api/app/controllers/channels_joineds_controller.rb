@@ -1,5 +1,0 @@
-class ChannelsJoinedsController < ApplicationController
-
-
-
-end

@@ -79,6 +79,11 @@ class ChannelsController < ApplicationController
         })
     end     
 
+    def search_by_name
+        channel = Channel.where("name like ?", "#{params[:name]}")
+        json_response(channel)
+    end
+
     def channel_params
         params.permit(:user_id, :name, :active)
     end

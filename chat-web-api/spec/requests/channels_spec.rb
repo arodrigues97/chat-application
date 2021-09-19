@@ -143,4 +143,25 @@ describe 'Channels API', type: :request do
         end 
     end
 
+    describe 'GET /channels/search' do
+
+        channel_name = "Channel!"
+
+        before {
+            user = FactoryBot.create(:user_random)
+            channel = FactoryBot.create(:channel_random, user_id: user.id, active: true, name: channel_name)
+            get "/channels/search/Channel!"
+            @json = JSON.parse(response.body)
+        }
+
+        it 'returns status code 200' do
+            expect(response).to have_http_status(200)
+        end
+
+        it 'should return channel on search' do
+            expect(@json.first['name']).to eq(channel_name)
+       end
+
+    end
+
 end
