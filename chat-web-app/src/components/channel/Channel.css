@@ -12,3 +12,13 @@
   margin-top: 1rem;
   padding: 1rem;
 }
+
+.chatSearch {
+  padding-top: 1rem;
+  vertical-align: true;
+  display: inline-block;
+}
+
+.channelFunctions {
+  float: right;
+}

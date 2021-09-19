@@ -2,9 +2,9 @@ import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
 import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import App from "../components/App"
-import { ChatChannel } from "../types/ChatChannel"
 import { USE_API } from "../config"
 import { channelData } from "../data/data"
+import { ChatChannel } from "../types/ChatChannel"
 import { ChatMessage } from "../types/ChatMessage"
 
 /**
@@ -64,6 +64,18 @@ const AppContainer = () => {
    * Represents the text value of the chat message being edited
    */
   const [editMessage, setEditMessage] = useState<string | undefined>()
+
+  /**
+   * Represents the text value in the search for previous message input
+   */
+  const [searchText, setSearchText] = useState<string | undefined>()
+
+  /**
+   * Represents the search results returned from the search text
+   */
+  const [searchResults, setSearchResults] = useState<
+    ChatMessage[] | undefined
+  >()
 
   /**
    * Handles the change event of message typed in the @link ChatBox
@@ -129,22 +141,26 @@ const AppContainer = () => {
     channelClone.messages.push({
       id: channelClone.messages.length + 1,
       message: message,
-      user: {
-        id: 1,
-        name: "Adam Rodrigues",
-      },
-      channelId: 1,
+      user: user,
+      channelId: channel.id,
       timeStamp: "2021-12-1 11:10PM",
     })
     setChatChannels(clone)
     setChatMessage("")
+    updateSearchResults()
     console.log("Handled persist message: ", message, ", channel:", channel)
   }
 
+  /**
+   * The event handler for deleting a message
+   * @param message The message being deleted
+   */
   const handleDeleteMessage = (message: ChatMessage) => {
     if (!channels) {
       return
     }
+
+    console.log("Deleting message: ", message)
 
     const clone = [...channels]
     const channel = clone.find((c) => c.id === message.channelId)
@@ -154,15 +170,19 @@ const AppContainer = () => {
     }
 
     channel.messages = channel.messages.filter((m) => m.id != message.id)
-    console.log(channel)
     setChatChannels(clone)
+    updateSearchResults()
   }
 
+  /**
+   * The event handler for toggling a message to be edited
+   * @param message The message being toggled
+   */
   const handleToggleEditMessage = (message: ChatMessage) => {
     if (!channels) {
       return
     }
-
+    console.log("Toggling edit for message: ", message)
     const clone = [...channels]
 
     if (editMessage != undefined) {
@@ -201,10 +221,16 @@ const AppContainer = () => {
   const handleEditMessageChange = (event: ChangeEvent<HTMLInputElement>) =>
     setEditMessage(event.target.value)
 
+  /**
+   * The event handler for the saving of an edited message
+   * @param message The message to edit
+   */
   const handleEditMessageSave = (message: ChatMessage) => {
     if (!channels || !editMessage) {
       return
     }
+
+    console.log("Saving message: ", message)
 
     const clone = [...channels]
     const channel = clone.find((c) => c.id === message.channelId)
@@ -226,19 +252,60 @@ const AppContainer = () => {
     setChatChannels(clone)
   }
 
+  /**
+   * Handles the logic for leaving a channel
+   * @param channel The channel to leave
+   */
+  const handleLeaveChannel = (channel: ChatChannel) => {
+    if (channel !== activeChannel) {
+      return
+    }
+    setActiveChannel(undefined)
+    //TODO: more logic
+  }
+
+  /**
+   * The event handler when the input changes for the search box.
+   * Sets the new next value to update the input, also calculates the results to return
+   * @param value The value of the input
+   * @param channel The channel to seach in
+   */
+  const handleSearchChange = (
+    value: string | undefined,
+    channel: ChatChannel
+  ) => {
+    setSearchText(value)
+    if (!value) {
+      return
+    }
+    setSearchResults(
+      channel.messages.filter((m) =>
+        m.message.toLocaleLowerCase().includes(value.toLowerCase())
+      )
+    )
+  }
+
+  /**
+   * This function is used anytime message state changes to re-update the results
+   * if there is any search text inputted
+   */
+  const updateSearchResults = () => {
+    if (!searchText) {
+      return
+    }
+    if (searchText.length === 0 && searchResults && searchResults.length > 0) {
+      setSearchResults(undefined)
+    } else {
+      if (!activeChannel) {
+        return
+      }
+      handleSearchChange(searchText, activeChannel)
+    }
+  }
+
   useEffect(() => {
     fetchChatRooms()
   }, [])
-
-  // useEffect(() => {
-  //   if (!channels) {
-  //     return
-  //   }
-  //   //If theres channels && no active channel is set, then set it to the first channel in the list
-  //   if (channels.length > 0 && !activeChannel) {
-  //     handleChannelChange(channels[0])
-  //   }
-  // }, [channels])
 
   if (fetching) {
     return (
@@ -259,14 +326,24 @@ const AppContainer = () => {
       channels={channels}
       activeChannel={activeChannel}
       handleChannelChange={handleChannelChange}
-      chatMessage={chatMessage}
-      handleChatMessageChange={handleChatMessageChange}
-      handlePersistMessage={handlePersistMessage}
-      editMessage={editMessage}
-      handleToggleEditMessage={handleToggleEditMessage}
-      handleEditMessageChange={handleEditMessageChange}
-      handleEditMessageSave={handleEditMessageSave}
-      handleDeleteMessage={handleDeleteMessage}
+      channelProps={{
+        channel: activeChannel,
+        chatMessage: chatMessage,
+        handleChatMessageChange: handleChatMessageChange,
+        handlePersistMessage: handlePersistMessage,
+        editMessage: editMessage,
+        handleToggleEditMessage: handleToggleEditMessage,
+        handleEditMessageChange: handleEditMessageChange,
+        handleEditMessageSave: handleEditMessageSave,
+        handleDeleteMessage: handleDeleteMessage,
+        handleLeaveChannel: handleLeaveChannel,
+        chatSearch: {
+          channel: activeChannel,
+          searchText: searchText,
+          searchResults: searchResults,
+          handleSearchChange,
+        },
+      }}
     />
   )
 }

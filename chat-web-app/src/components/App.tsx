@@ -15,28 +15,20 @@ import {
 import { ChatChannel } from "../types/ChatChannel"
 import { ChatMessage } from "../types/ChatMessage"
 import "./App.css"
-import Channel from "./channel/Channel"
+import Channel, { ChannelProps } from "./channel/Channel"
 import ChannelsMenu from "./channel/ChannelsMenu"
+import { ChatSearchProps } from "./channel/chat/ChatSearch"
 
 export type AppProps = {
   channels: ChatChannel[] | undefined
-  activeChannel?: ChatChannel | undefined
+  channelProps: ChannelProps
+  activeChannel: ChatChannel | undefined
   handleChannelChange: ChangeChannelFunction
-  chatMessage: string | undefined
-  handleChatMessageChange: ChatMessageChangeFunction
-  handlePersistMessage: PersistMessageFunction
-  editMessage: string | undefined
-  handleToggleEditMessage: (message: ChatMessage) => void
-  handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
-  handleEditMessageSave: (message: ChatMessage) => void
-  handleDeleteMessage: (message: ChatMessage) => void
 }
 
 const App = (props: AppProps) => {
+  const { channels, channelProps, activeChannel, handleChannelChange } = props
   const {
-    channels,
-    activeChannel,
-    handleChannelChange,
     chatMessage,
     handleChatMessageChange,
     handlePersistMessage,
@@ -45,7 +37,9 @@ const App = (props: AppProps) => {
     handleEditMessageChange,
     handleEditMessageSave,
     handleDeleteMessage,
-  } = props
+    handleLeaveChannel,
+    chatSearch,
+  } = channelProps
   return (
     <div className="app">
       <Container>
@@ -68,28 +62,32 @@ const App = (props: AppProps) => {
               />
             </Grid.Column>
             <Grid.Column stretched width={12}>
-              {!activeChannel && (
-                <Segment placeholder>
-                  <Header icon>
-                    <Icon name="question" />
-                    Create your own channel
-                  </Header>
-                  {channels && <Button primary content="Create Channel" />}
-                </Segment>
-              )}
-              {activeChannel && (
-                <Channel
-                  channel={activeChannel}
-                  chatMessage={chatMessage}
-                  handleChatMessageChange={handleChatMessageChange}
-                  handlePersistMessage={handlePersistMessage}
-                  editMessage={editMessage}
-                  handleToggleEditMessage={handleToggleEditMessage}
-                  handleEditMessageChange={handleEditMessageChange}
-                  handleEditMessageSave={handleEditMessageSave}
-                  handleDeleteMessage={handleDeleteMessage}
-                />
-              )}
+              <Segment>
+                {!activeChannel && (
+                  <Segment placeholder>
+                    <Header icon>
+                      <Icon name="question" />
+                      Create your own channel
+                    </Header>
+                    {channels && <Button primary content="Create Channel" />}
+                  </Segment>
+                )}
+                {activeChannel && (
+                  <Channel
+                    channel={activeChannel}
+                    chatMessage={chatMessage}
+                    handleChatMessageChange={handleChatMessageChange}
+                    handlePersistMessage={handlePersistMessage}
+                    editMessage={editMessage}
+                    handleToggleEditMessage={handleToggleEditMessage}
+                    handleEditMessageChange={handleEditMessageChange}
+                    handleEditMessageSave={handleEditMessageSave}
+                    handleDeleteMessage={handleDeleteMessage}
+                    handleLeaveChannel={handleLeaveChannel}
+                    chatSearch={chatSearch}
+                  />
+                )}
+              </Segment>
             </Grid.Column>
           </Grid>
         )}

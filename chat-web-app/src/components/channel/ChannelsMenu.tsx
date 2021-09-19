@@ -25,6 +25,7 @@ const ChannelsMenu = (props: ChatRoomMenuPros) => {
             />
           ) : (
             <Modal
+              key={channel.id}
               trigger={
                 <Menu.Item
                   name={channel.name}

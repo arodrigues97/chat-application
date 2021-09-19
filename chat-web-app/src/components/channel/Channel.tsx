@@ -9,9 +9,10 @@ import "./Channel.css"
 import ChannelHistory from "./ChannelHistory"
 import { ChangeEvent } from "react"
 import { ChatMessage } from "../../types/ChatMessage"
+import ChatSearch, { ChatSearchProps } from "./chat/ChatSearch"
 
 export type ChannelProps = {
-  channel: ChatChannel
+  channel: ChatChannel | undefined
   chatMessage: string | undefined
   handleChatMessageChange: ChatMessageChangeFunction
   handlePersistMessage: PersistMessageFunction
@@ -20,6 +21,8 @@ export type ChannelProps = {
   handleEditMessageChange: (event: ChangeEvent<HTMLInputElement>) => void
   handleEditMessageSave: (message: ChatMessage) => void
   handleDeleteMessage: (message: ChatMessage) => void
+  handleLeaveChannel: (channel: ChatChannel) => void
+  chatSearch: ChatSearchProps
 }
 
 const Channel = (props: ChannelProps) => {
@@ -33,7 +36,13 @@ const Channel = (props: ChannelProps) => {
     handleEditMessageChange,
     handleEditMessageSave,
     handleDeleteMessage,
+    handleLeaveChannel,
+    chatSearch,
   } = props
+
+  if (!channel) {
+    return <div>Invalid props!</div>
+  }
 
   return (
     <div className="channel">
@@ -54,10 +63,20 @@ const Channel = (props: ChannelProps) => {
           chatMessage={chatMessage}
           handleChatMessageChange={handleChatMessageChange}
           handlePersistMessage={handlePersistMessage}
+          chatSearch={chatSearch}
         />
       </Segment>
 
-      <Button floated="right" primary content="Leave" />
+      <div className="channelFunctions">
+        <Button
+          primary
+          content="Leave"
+          onClick={() => handleLeaveChannel(channel)}
+        />
+        <div className="chatSearch">
+          <ChatSearch {...chatSearch} />
+        </div>
+      </div>
     </div>
   )
 }
