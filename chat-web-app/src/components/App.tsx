@@ -1,33 +1,41 @@
-import { ChangeEvent } from "react"
 import {
   Button,
   Container,
   Grid,
   Header,
   Icon,
+  Message,
   Segment,
 } from "semantic-ui-react"
-import {
-  ChangeChannelFunction,
-  ChatMessageChangeFunction,
-  PersistMessageFunction,
-} from "../containers/AppContainer"
+import { ChangeChannelFunction } from "../containers/AppContainer"
 import { ChatChannel } from "../types/ChatChannel"
-import { ChatMessage } from "../types/ChatMessage"
+import { User } from "../types/User"
 import "./App.css"
 import Channel, { ChannelProps } from "./channel/Channel"
 import ChannelsMenu from "./channel/ChannelsMenu"
-import { ChatSearchProps } from "./channel/chat/ChatSearch"
 
 export type AppProps = {
+  user: User
   channels: ChatChannel[] | undefined
   channelProps: ChannelProps
   activeChannel: ChatChannel | undefined
+  error: string | undefined
+  setError: (error: string | undefined) => void
   handleChannelChange: ChangeChannelFunction
+  handleJoinChannel: (channel: ChatChannel) => void
 }
 
 const App = (props: AppProps) => {
-  const { channels, channelProps, activeChannel, handleChannelChange } = props
+  const {
+    user,
+    channels,
+    channelProps,
+    activeChannel,
+    error,
+    setError,
+    handleChannelChange,
+    handleJoinChannel,
+  } = props
   const {
     chatMessage,
     handleChatMessageChange,
@@ -38,11 +46,20 @@ const App = (props: AppProps) => {
     handleEditMessageSave,
     handleDeleteMessage,
     handleLeaveChannel,
+    hasUserJoinedChannel,
     chatSearch,
   } = channelProps
   return (
     <div className="app">
       <Container>
+        {error && (
+          <Message negative onDismiss={() => setError(undefined)}>
+            <Message.Header>Error</Message.Header>
+            <Message.Content>
+              <p>{error}</p>
+            </Message.Content>
+          </Message>
+        )}
         {(!channels || channels.length === 0) && (
           <Segment placeholder>
             <Header icon>
@@ -56,9 +73,11 @@ const App = (props: AppProps) => {
           <Grid>
             <Grid.Column width={4}>
               <ChannelsMenu
+                user={user}
                 channels={channels}
                 activeChannel={activeChannel}
                 handleChannelChange={handleChannelChange}
+                handleJoinChannel={handleJoinChannel}
               />
             </Grid.Column>
             <Grid.Column stretched width={12}>
@@ -85,6 +104,7 @@ const App = (props: AppProps) => {
                     handleDeleteMessage={handleDeleteMessage}
                     handleLeaveChannel={handleLeaveChannel}
                     chatSearch={chatSearch}
+                    hasUserJoinedChannel={hasUserJoinedChannel}
                   />
                 )}
               </Segment>

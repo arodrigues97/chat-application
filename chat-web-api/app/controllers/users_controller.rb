@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
     
     def index
-        @users = User.all
+       users = User.all
         json_response(@users)
     end 
 
@@ -10,12 +10,12 @@ class UsersController < ApplicationController
     end
     
     def create
-        @user = User.create!(user_params)
+       user = User.create!(user_params)
         json_response(@user)
     end 
 
     def set_user
-        @user = User.find(params[:id])
+       user = User.find(params[:id])
     end
 
 

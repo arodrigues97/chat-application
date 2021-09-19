@@ -22,6 +22,7 @@ export type ChannelProps = {
   handleEditMessageSave: (message: ChatMessage) => void
   handleDeleteMessage: (message: ChatMessage) => void
   handleLeaveChannel: (channel: ChatChannel) => void
+  hasUserJoinedChannel: (channel: ChatChannel) => Promise<boolean>
   chatSearch: ChatSearchProps
 }
 

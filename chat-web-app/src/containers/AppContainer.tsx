@@ -1,11 +1,13 @@
-import axios from "axios"
 import { ChangeEvent, useEffect, useState } from "react"
 import { Header, Icon, Loader, Segment } from "semantic-ui-react"
 import App from "../components/App"
-import { USE_API } from "../config"
-import { channelData } from "../data/data"
 import { ChatChannel } from "../types/ChatChannel"
 import { ChatMessage } from "../types/ChatMessage"
+import {
+  getChannels,
+  getUserJoinedChannel,
+  joinChannel,
+} from "../utils/AxiosHelper"
 
 /**
  * The structure of the method for changing a channel
@@ -41,6 +43,11 @@ const AppContainer = () => {
    * Represents the active chat room joined
    */
   const [activeChannel, setActiveChannel] = useState<ChatChannel | undefined>()
+
+  /**
+   * The error to display
+   */
+  const [error, setError] = useState<string | undefined>()
 
   /**
    * Represents if there is fetching happening
@@ -84,29 +91,64 @@ const AppContainer = () => {
   const handleChatMessageChange = (event: ChangeEvent<HTMLInputElement>) =>
     setChatMessage(event.target.value)
 
+  const sendError = (error: string) => {
+    setError(error)
+  }
+
   /**
    * Handles the async logic to fetch chat channel data or if the USE_API constant
    * is set to false the app will work with mock data
    */
   const fetchChatRooms = async () => {
-    if (!USE_API) {
-      setChatChannels(channelData)
+    setFetching(true)
+    const response = await getChannels()
+    setFetching(false)
+    if (response.error) {
+      sendError(response.error)
       return
     }
+    if (!response.data) {
+      sendError("No channel data.")
+      return
+    }
+    setFetching(false)
+    setChatChannels(response.data)
+  }
 
+  /**
+   * Sends an http request to join a channel
+   * @param channel The channel to join
+   */
+  const handleJoinChannel = async (channel: ChatChannel) => {
     setFetching(true)
+    const response = await joinChannel(channel, user)
+    setFetching(false)
+    if (response.error) {
+      sendError(response.error)
+      return
+    }
+    if (!response.data) {
+      sendError("Missing data!")
+      return
+    }
+    setActiveChannel(channel)
+  }
 
-    axios
-      .get<ChatChannel[]>("http://localhost:3000/channels")
-      .then((response) => {
-        setChatChannels(response.data)
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
-      .then(() => {
-        setFetching(false)
-      })
+  const hasUserJoinedChannel = async (channel: ChatChannel) => {
+    console.log("Checking if user has joined channel: ", joinChannel)
+    setFetching(true)
+    const response = await getUserJoinedChannel(channel, user)
+    setFetching(false)
+    if (response.error) {
+      sendError(response.error)
+      return false
+    }
+    if (!response.data) {
+      sendError("Missing data!")
+      return false
+    }
+    console.log("Joined channel -", response)
+    return true
   }
 
   /**
@@ -323,9 +365,13 @@ const AppContainer = () => {
 
   return (
     <App
+      user={user}
       channels={channels}
       activeChannel={activeChannel}
+      error={error}
+      setError={setError}
       handleChannelChange={handleChannelChange}
+      handleJoinChannel={handleJoinChannel}
       channelProps={{
         channel: activeChannel,
         chatMessage: chatMessage,
@@ -337,6 +383,7 @@ const AppContainer = () => {
         handleEditMessageSave: handleEditMessageSave,
         handleDeleteMessage: handleDeleteMessage,
         handleLeaveChannel: handleLeaveChannel,
+        hasUserJoinedChannel: hasUserJoinedChannel,
         chatSearch: {
           channel: activeChannel,
           searchText: searchText,

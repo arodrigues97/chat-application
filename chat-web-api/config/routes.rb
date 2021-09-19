@@ -12,5 +12,13 @@ Rails.application.routes.draw do
 
   get 'active_channels', :to => 'channels#active_channels'
 
+  get '/channels/:id/statistics', :to => 'channels#statistics'
+  get '/channels/:id/users', :to => 'channels#users'
+
+  post '/channels/:id/join', :to => 'channels#join'
+
+  get '/channels/:id/user_joined', :to => 'channels#user_joined'
+ 
+  get '/giphy/suggestion', :to => 'giphy#suggestion'
 
 end
