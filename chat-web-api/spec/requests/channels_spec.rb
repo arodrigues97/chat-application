@@ -82,7 +82,7 @@ describe 'Channels API', type: :request do
 
     end
 
-    #Test cases for retrieving a sinle channel
+    #Test cases for retrieving a single channel
     describe 'GET /channels/:id' do
         before {
             @user = FactoryBot.create(:user_random)
