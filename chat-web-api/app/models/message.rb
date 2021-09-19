@@ -10,7 +10,9 @@ class Message < ApplicationRecord
       {
         id: id,
         message: message,
-        timeStamp: created_at,
+        timeStamp: created_at.strftime("%Y-%m-%d %I:%M:%S"),
+        lastEdited: updated_at.strftime("%Y-%m-%d %I:%M:%S"),
+        edited: created_at != updated_at,
         channelId: channel_id,
         user: {
           id: user.id,

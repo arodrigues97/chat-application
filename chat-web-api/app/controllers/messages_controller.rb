@@ -1,9 +1,6 @@
 class MessagesController < ApplicationController
 
-
-
     def index
-
         if (params.has_key?(:channel_id))
             #Returns all the message history for a channel 
             messages = Message.where(:channel_id => params[:channel_id])
@@ -15,6 +12,11 @@ class MessagesController < ApplicationController
             messages = Message.all
         end
         json_response(messages)
+    end
+
+    def destroy
+        message = Message.destroy(params[:id])
+        json_response(message)
     end
 
     def show 
