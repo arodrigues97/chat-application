@@ -142,6 +142,7 @@ describe 'Channels API', type: :request do
         end 
     end
 
+    #Search for a specific channel by name
     describe 'POST /channels/search' do
 
         before {

@@ -46,25 +46,25 @@ class ChannelsController < ApplicationController
         })
     end
 
+    #Joins a user to a channel
     def join 
 
         #Check if user exists
         user = User.find_by!(id: params[:user_id])
-        
-        #If they have already joined then return their joined response
-        if (ChannelJoined.exists?({
-            channel_id: params[:id],
-            user_id: params[:user_id]
-        }))
-        then
-            joined = ChannelJoined.find_by!(user_id: params[:user_id], channel_id: params[:id])
-            json_response(joined.channel)
+
+        if (ChannelJoined.exists?({ channel_id: params[:id], user_id: params[:user_id]}))
+            json_response({
+                "joined": true
+            })
         else
-            #Else create the relationship and return the response!
             joined = ChannelJoined.create!(user_id: params[:user_id], channel_id: params[:id])
             json_response(joined.channel)
         end
+        
+  
     end
+
+
 
     #Checks if a user has joined a specified channel
     def user_joined
