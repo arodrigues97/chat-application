@@ -105,36 +105,27 @@ $ npm run test
 # The server will initialize on the <http://localhost:3001>
 ```
 
-## Mock Data or Connect to API
-
-If you want to just use the mock data, in the front-end go to src/config.ts and set
-USE_API = false
-
 ## Postman Collection
 
 Located in the chat-web-api folder is a file called "Chat-Api.postman_collection"
 
-You can import that into Postman to test out the pre made end points.
+Feel free to import into Postman to have ready to go end points
 
-## :school: Assignment Related Information
-
-    Hello, If you're reading this then you're probably checking out the project! It was a great 
-    experience in learning rails.  It's definitely an extremely opionionated framework to say 
-    the least. An interesting takeaway for me from this project
-    was the speed at which you can get a super functioning API up and running!
-
-    The features I choose to implement into the project were features that were dependent upon
-    one another so I could show them working in a Full Stack cohesively. All the features were 
-    super interesting however I choose to stuck to the baiscs for this :)
-
-    If I had more time I would have definitely been interested in implementing the AI chatbot.
-
-    When making assumptions I did my best to use my understanding of the industry but also what is 
-    expected in a take home programming assignment. I opted out not to include in any user authorization as the time 
-    restraint on this project indicated to me that it would not be fesible in a fully testing manner if chosen to implement.
-
-    Thank you for the opportunity and a chance to spend time on a new technology!
-
-    - Adam Rodrigues
-
+## :school: Assignment 
+  
+  To example my knowledge and skills as a full stack developer I chose features dependant upon one another. I believe this highlights my ability to look at the whole picture of a problem set, integrate solutions, provide testing on both stacks and deliver a production ready piece of software. 
+  
+  Next steps for this project for me would be to implement user authentication and a socket connection to allow for implementation of real time updates to channel messages.
+  
+  When making assumptions for this assignment I took in a variety of different factors. The purpose of this assignment as I understand is to capture my ability to write well tested, readable, maintainable code all while under a unique time constraint. Due to this, I decided to omit user authentication/login. The API accepts user provided ids when making identity driven api requests, such as a "user persisting a message in a channel they have joined". Had this project been of a different scope I would have implemented authentication using JWT tokens for user identification. The front-end works on the assumption the user is logged in as user id 1, I decided to this would be best for testing. 
+  
+  The next assumption I had made for this assingment was the integration of the back-end to the front-end. It does not specify that as a fullstack candidate that you are to implement the stacks cohesively, however, assuming the role is full-stack I had assumed and preferred it would be best to do so. 
+  
+  It was a blast working on this project, I implemented a few extra features out of enjoyment of learning ruby, feel free to chime in on these or focus solely on the features stated in the  <a href="#sparkles-features">Features</a>&#xa0; part of this readme.
+  
+  Regards,
+  
+Adam Rodrigues :sunglasses:
+  
+  
 <a href="#top">Back to top</a>
