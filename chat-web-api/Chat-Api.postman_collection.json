@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "64d8766d-807c-441a-9ea7-4562360307b9",
+		"_postman_id": "8bd4ef09-b55a-4087-955f-e6ac5df726b9",
 		"name": "Chat-Api",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -94,7 +94,7 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/channels/search?name=Rock and Roll",
+							"raw": "http://localhost:3000/channels/search?name=Adam's Channel",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -107,7 +107,7 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "Rock and Roll"
+									"value": "Adam's Channel"
 								}
 							]
 						}
@@ -151,7 +151,7 @@
 							]
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/search/?name=Adam",
+							"raw": "http://localhost:3000/users/search/?name=Adam Rodrigues",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -165,7 +165,7 @@
 							"query": [
 								{
 									"key": "name",
-									"value": "Adam"
+									"value": "Adam Rodrigues"
 								}
 							]
 						}
@@ -257,7 +257,7 @@
 					]
 				},
 				"url": {
-					"raw": "http://localhost:3000/channels/1/join?user_id=1",
+					"raw": "http://localhost:3000/channels/1/join?user_id=2",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -271,7 +271,7 @@
 					"query": [
 						{
 							"key": "user_id",
-							"value": "1"
+							"value": "2"
 						}
 					]
 				}
@@ -284,7 +284,7 @@
 				"method": "PUT",
 				"header": [],
 				"url": {
-					"raw": "http://localhost:3000/messages/4?message=New Text!!!",
+					"raw": "http://localhost:3000/messages/9?message=New Text!!!",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -292,7 +292,7 @@
 					"port": "3000",
 					"path": [
 						"messages",
-						"4"
+						"9"
 					],
 					"query": [
 						{
@@ -306,6 +306,17 @@
 		},
 		{
 			"name": "Delete Message",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "DELETE",
 				"header": [],
