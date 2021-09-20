@@ -6,6 +6,175 @@
 	},
 	"item": [
 		{
+			"name": "Feature Tests",
+			"item": [
+				{
+					"name": "Persist Chat Messages To Channels I Have Joined",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/messages?message=Hello!&user_id=1&channel_id=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"messages"
+							],
+							"query": [
+								{
+									"key": "message",
+									"value": "Hello!"
+								},
+								{
+									"key": "user_id",
+									"value": "1"
+								},
+								{
+									"key": "channel_id",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "See List of All Available Channels",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/channels/active/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"channels",
+								"active",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Giphy Suggestions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/giphy/suggestion?search=canada",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"giphy",
+								"suggestion"
+							],
+							"query": [
+								{
+									"key": "search",
+									"value": "canada"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lookup channels",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/channels/search?name=Rock and Roll",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"channels",
+								"search"
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Rock and Roll"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Channel Statistics",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/channels/1/statistics",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"channels",
+								"1",
+								"statistics"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Lookup user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Adam Rodrigues\n",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/users/search/?name=Adam",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"users",
+								"search",
+								""
+							],
+							"query": [
+								{
+									"key": "name",
+									"value": "Adam"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Create Channel",
 			"request": {
 				"method": "POST",
@@ -34,40 +203,6 @@
 					"port": "3000",
 					"path": [
 						"channels"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "Join Channel",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "channel_id",
-							"value": "1",
-							"type": "text"
-						},
-						{
-							"key": "user_id",
-							"value": "1",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://localhost:3000/channels_joineds",
-					"protocol": "http",
-					"host": [
-						"localhost"
-					],
-					"port": "3000",
-					"path": [
-						"channels_joineds"
 					]
 				}
 			},
@@ -107,19 +242,83 @@
 			"response": []
 		},
 		{
-			"name": "Active Channels",
+			"name": "Join Channel",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "user_id",
+							"value": "2",
+							"type": "text"
+						}
+					]
+				},
 				"url": {
-					"raw": "http://localhost:3000/active_channels",
+					"raw": "http://localhost:3000/channels/1/join?user_id=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "3000",
 					"path": [
-						"active_channels"
+						"channels",
+						"1",
+						"join"
+					],
+					"query": [
+						{
+							"key": "user_id",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Edit Message",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/messages/4?message=New Text!!!",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"messages",
+						"4"
+					],
+					"query": [
+						{
+							"key": "message",
+							"value": "New Text!!!"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Message",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/messages/11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"messages",
+						"11"
 					]
 				}
 			},
