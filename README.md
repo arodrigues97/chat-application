@@ -38,7 +38,7 @@ Chat application is built with React, TypeScript, Semantic UI and Rails! The goa
 
 ## :rocket: Technologies
 
-The following tools were used in this project:
+The following technologies were used in this project:
 
 - [React](https://pt-br.reactjs.org/)
 - [TypeScript](https://www.typescriptlang.org/)
